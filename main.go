@@ -1,59 +1,46 @@
 package main
 
 import (
+	"bufio"
 	"fmt"
-	"io"
+	"log"
 	"os"
-	"strings"
 )
 
-// Allows chaining readers
-type alphaReader struct {
-	src io.Reader
-}
-
-func NewAlphaReader(source io.Reader) *alphaReader {
-	return &alphaReader{source}
-}
-
-func (a *alphaReader) Read(p []byte) (int, error) {
-	// Not empty object
-	if len(p) == 0 {
-		return 0, nil
-	}
-
-	count, err := a.src.Read(p) // Only here string reader stream is called
-	if err != nil {
-		return count, err
-	}
-
-	for i := 0; i < len(p); i++ {
-		if (p[i] >= 'A' && p[i] <= 'Z') ||
-			(p[i] >= 'a' && p[i] <= 'z') {
-			continue
-		} else {
-			p[i] = 0
-		}
-	}
-
-	return count, io.EOF
-}
-
 func main() {
-	fmt.Println("Starting program...")
+	fmt.Println("Starting program")
 
-	str := strings.NewReader("This is! quite a nice string")
-	fmt.Printf("%T\n", str)
-	fmt.Printf("%+v\n", str)
-	fmt.Println(str)
+	file, err := os.Open("./data/input.txt")
+	if err != nil {
+		log.Fatal(err)
+		return
+	}
+	defer file.Close()
 
-	alpha := NewAlphaReader(str)
-	io.Copy(os.Stdout, alpha)
-	fmt.Println()
+	lines := []string{}
 
-	// str := alphareader("This is! quite a nice string")
-	// io.Copy(os.Stdout, &str)
-	// fmt.Println()
+	scanner := bufio.NewScanner(file)
+	for scanner.Scan() {
+		// TODO: add line only if it's an important line
+		lines = append(lines, scanner.Text())
+	}
 
-	fmt.Println("Program finished")
+	fmt.Println(lines)
+	fmt.Println(len(lines))
+
+	// lines := []string{}
+
+	// for {
+	// 	_, err := fmt.Fscanln(file, lines)
+	// 	if err != nil {
+	// 		if err == io.EOF {
+	// 			break
+	// 		} else {
+	// 			fmt.Println("Scan error: ", err)
+	// 			return
+	// 		}
+	// 	}
+	// }
+
+	fmt.Println("Program finished.")
 }
