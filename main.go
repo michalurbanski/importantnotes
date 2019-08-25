@@ -1,28 +1,19 @@
 package main
 
 import (
-	"bufio"
 	"fmt"
+	"importantnotes/readers/filereader"
 	"log"
-	"os"
 )
 
 func main() {
 	fmt.Println("Starting program")
 
-	file, err := os.Open("./data/input.txt")
+	path := "./data/input.txt"
+	lines, err := filereader.ReadLines(path)
 	if err != nil {
 		log.Fatal(err)
 		return
-	}
-	defer file.Close()
-
-	lines := []string{}
-
-	scanner := bufio.NewScanner(file)
-	for scanner.Scan() {
-		// TODO: add line only if it's an important line
-		lines = append(lines, scanner.Text())
 	}
 
 	fmt.Println(lines)
