@@ -2,6 +2,8 @@ package main
 
 import (
 	"fmt"
+	"importantnotes/enums"
+	"importantnotes/models"
 	"importantnotes/readers/filereader"
 	"log"
 )
@@ -15,6 +17,9 @@ func main() {
 		log.Fatal(err)
 		return
 	}
+
+	note := models.NewNote(1, "text", enums.Important)
+	fmt.Println(note)
 
 	fmt.Println(lines)
 	fmt.Println(len(lines))
