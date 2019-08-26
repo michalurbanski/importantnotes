@@ -8,6 +8,7 @@ type Importance int
 // Status denotes whether note is not started, done, or aborted
 type Status int
 
+// TODO: how to wrap it
 const (
 	// Regular means it can be done at any time
 	Regular Importance = iota
@@ -18,6 +19,11 @@ const (
 	// VeryImportant means it's a priority
 	VeryImportant
 )
+
+func DetermineNoteImportance(line string) Importance {
+	// TODO: based on line prefix
+	return Regular
+}
 
 const (
 	NotStarted Status = iota
