@@ -5,7 +5,10 @@ package enums
 // Importance states how note is important
 type Importance int
 
-// Status denotes whether note is not started, done, or aborted
+// Status denotes whether note is:
+// - not started
+// - done
+// - aborted
 type Status int
 
 // TODO: how to wrap it
@@ -19,6 +22,16 @@ const (
 	// VeryImportant means it's a priority
 	VeryImportant
 )
+
+func (i Importance) String() string {
+	names := [...]string{
+		"Regular",
+		"Important",
+		"VeryImportant",
+	}
+
+	return names[i]
+}
 
 func DetermineNoteImportance(line string) Importance {
 	// TODO: based on line prefix

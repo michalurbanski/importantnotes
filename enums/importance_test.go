@@ -5,10 +5,20 @@ import (
 )
 
 func TestDetermineImportanceBasedOnLine(t *testing.T) {
-	line := "First line"
-	importance := DetermineNoteImportance(line)
+	cases := []struct {
+		input  string
+		result Importance
+	}{
+		{"First line", Regular},
+		{"! Second line", Important},
+		{"!!! Third line", VeryImportant},
+	}
 
-	if importance != Regular {
-		t.Error("Importance is not correct")
+	for _, c := range cases {
+		result := DetermineNoteImportance(c.input)
+
+		if result != c.result {
+			t.Errorf("Error: %s is '%s', but should be '%s'\n", c.input, result, c.result)
+		}
 	}
 }
