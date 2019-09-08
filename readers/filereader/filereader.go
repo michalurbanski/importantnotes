@@ -18,5 +18,11 @@ func ReadLines(path string) ([]string, error) {
 	for scanner.Scan() {
 		lines = append(lines, scanner.Text())
 	}
+
+	// Check for any errors while reading the file
+	if scanner.Err() != nil {
+		return nil, scanner.Err()
+	}
+
 	return lines, scanner.Err()
 }
