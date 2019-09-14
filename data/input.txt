@@ -3,3 +3,4 @@ Second line
 ! important line
 !!! very important line
 Another simple line
+Line not starting from ! is just a regular line

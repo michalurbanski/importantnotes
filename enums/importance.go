@@ -1,5 +1,9 @@
 package enums
 
+import (
+	"regexp"
+)
+
 // TODO: http://golang-basic.blogspot.com/2014/07/step-by-step-guide-to-declaring-enums.html
 
 // Importance states how note is important
@@ -37,9 +41,31 @@ func (i Importance) String() string {
 	return names[i]
 }
 
-func DetermineNoteImportance(line string) Importance {
-	// TODO: based on line prefix
-	return Regular
+// DetermineNoteImportance determine how note is important
+func DetermineNoteImportance(line string) (Importance, error) {
+	// At first matching Very important lines has to be implemented
+	// as they will fit also into second condition of important notes.
+	// So order does matter.
+	match, err := regexp.MatchString("^!!!", line)
+	if err != nil {
+		return Regular, err
+	}
+
+	if match {
+		return VeryImportant, nil
+	}
+
+	// Check for important notes
+	match, err = regexp.MatchString("^!", line)
+	if err != nil {
+		return Regular, err
+	}
+
+	if match {
+		return Important, nil
+	}
+
+	return Regular, nil
 }
 
 const (
