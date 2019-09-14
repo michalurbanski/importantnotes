@@ -2,7 +2,8 @@ package models
 
 import "importantnotes/enums"
 
-// Note represents a note - one line in input file
+// Note represents a note - one line in an input file
+// Each line has its own importance
 type Note struct {
 	LineNumber int
 	Text       string
