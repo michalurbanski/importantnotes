@@ -24,5 +24,5 @@ func ReadLines(path string) ([]string, error) {
 		return nil, scanner.Err()
 	}
 
-	return lines, scanner.Err()
+	return lines, nil
 }

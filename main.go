@@ -15,6 +15,8 @@ func main() {
 	lines, err := filereader.ReadLines(path)
 	if err != nil {
 		log.Fatal(err)
+		//panic("Something went wrong") // panic message is not printed when
+		// log.Fatal() is used
 		return
 	}
 
