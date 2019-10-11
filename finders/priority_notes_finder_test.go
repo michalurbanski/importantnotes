@@ -18,7 +18,7 @@ func TestFindPriorityNotes(t *testing.T) {
 	for i, text := range notes {
 		importance, _ := enums.DetermineNoteImportance(text)
 		actionList.Notes = append(actionList.Notes,
-			*models.NewNote(i, text, importance))
+			*models.CreateNote(i, text, importance))
 	}
 
 	// Find priority notes

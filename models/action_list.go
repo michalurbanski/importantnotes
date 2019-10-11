@@ -6,5 +6,9 @@ type ActionList struct {
 	Notes []Note
 }
 
-// TODO: Create action list based on []string, because this is how it's used
-// in main method
+// NewActionList creates ActionList with notes based on plain lines.
+func NewActionList(lines []string) {
+	// TODO: Create action list based on []string, because this is how it's used
+	// in main method
+	panic("not implemented")
+}
