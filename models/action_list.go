@@ -7,8 +7,18 @@ type ActionList struct {
 }
 
 // NewActionList creates ActionList with notes based on plain lines.
-func NewActionList(lines []string) {
-	// TODO: Create action list based on []string, because this is how it's used
-	// in main method
-	panic("not implemented")
+func NewActionList(lines []string) *ActionList {
+	actionList := ActionList{}
+
+	// TODO: index here is not a line number, but just subsequent item - to be fixed
+	for index, line := range lines {
+		actionList.Notes = append(actionList.Notes, *NewNote(index, line))
+	}
+
+	return &actionList
+}
+
+// Len returns number of notes.
+func (a *ActionList) Len() int {
+	return len(a.Notes)
 }

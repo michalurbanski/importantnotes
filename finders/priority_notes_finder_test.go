@@ -1,30 +1,22 @@
 package finders
 
 import (
-	"importantnotes/enums"
+	"importantnotes/helpers/test"
 	"importantnotes/models"
 	"testing"
 )
 
 func TestFindPriorityNotes(t *testing.T) {
-	notes := [...]string{
+	asserter := test.Asserter{T: t}
+
+	notes := []string{
 		"!important notes",
 		"!!! very important notes",
 		"regular note"}
 
-	var actionList = models.ActionList{}
-
-	// Convert to action list
-	for i, text := range notes {
-		importance, _ := enums.DetermineNoteImportance(text)
-		actionList.Notes = append(actionList.Notes,
-			*models.CreateNote(i, text, importance))
-	}
+	actionList := models.NewActionList(notes)
 
 	// Find priority notes
-	priorityNotes := FindPriorityNotes(&actionList)
-	if len(priorityNotes.Notes) != 2 {
-		t.Errorf("Priority notes count should be %d, but %d determined",
-			2, len(priorityNotes.Notes))
-	}
+	priorityNotes := FindPriorityNotes(actionList)
+	asserter.Equal(priorityNotes.Len(), 2)
 }

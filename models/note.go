@@ -4,7 +4,7 @@ import "importantnotes/enums"
 
 // Note represents a note - one line in an input file
 // Each line has its own importance
-// TODO: avoid unitialized structures by making type private?
+// TODO: avoid uninitialized structures by making type private?
 type Note struct {
 	LineNumber int
 	Text       string
