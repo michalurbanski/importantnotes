@@ -19,7 +19,8 @@ func main() {
 		return
 	}
 
-	note := models.NewNote(1, "text")
+	inputLine := &models.InputLine{Number: 1, Text: "text"}
+	note := models.NewNote(inputLine)
 	fmt.Println(note)
 
 	fmt.Println(lines)

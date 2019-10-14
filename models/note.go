@@ -11,16 +11,15 @@ type Note struct {
 	Importance enums.Importance
 }
 
-func createNote(lineNumber int, text string, importance enums.Importance) *Note {
-	return &Note{lineNumber, text, importance}
-}
-
-// NewNote creates Note object based on input line and its number.
-func NewNote(lineNumber int, line string) *Note {
-	importance, err := enums.DetermineNoteImportance(line)
+// NewNote creates a note based on input line.
+func NewNote(inputLine *InputLine) *Note {
+	importance, err := enums.DetermineNoteImportance(inputLine.Text)
 	if err != nil {
 		panic("Incorrect line parsing")
 	}
 
-	return &Note{LineNumber: lineNumber, Text: line, Importance: importance}
+	return &Note{
+		LineNumber: inputLine.Number,
+		Text:       inputLine.Text,
+		Importance: importance}
 }

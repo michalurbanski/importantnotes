@@ -6,12 +6,14 @@ import (
 	"testing"
 )
 
+// TODO: make these tests parameterized
 func TestCreatesNewNoteFromLine(t *testing.T) {
 	a := &test.Asserter{T: t}
 
 	lineNumber := 1
 	line := "This is a regular line"
-	note := NewNote(lineNumber, line)
+	inputLine := &InputLine{Number: lineNumber, Text: line}
+	note := NewNote(inputLine)
 
 	a.Equal(note.LineNumber, lineNumber)
 	a.Equal(note.Text, line)
@@ -23,7 +25,8 @@ func TestCreatesNewNoteForImportantLine(t *testing.T) {
 
 	lineNumber := 2
 	line := "!!! This is very important line"
-	note := NewNote(lineNumber, line)
+	inputLine := &InputLine{Number: lineNumber, Text: line}
+	note := NewNote(inputLine)
 
 	a.Equal(note.LineNumber, lineNumber)
 	a.Equal(note.Text, line)

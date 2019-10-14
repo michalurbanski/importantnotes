@@ -6,13 +6,13 @@ type ActionList struct {
 	Notes []Note
 }
 
-// NewActionList creates ActionList with notes based on plain lines.
-func NewActionList(lines []string) *ActionList {
+// NewActionList creates ActionList with notes based on input lines.
+func NewActionList(inputLines []InputLine) *ActionList {
 	actionList := ActionList{}
 
-	// TODO: index here is not a line number, but just subsequent item - to be fixed
-	for index, line := range lines {
-		actionList.Notes = append(actionList.Notes, *NewNote(index, line))
+	for _, line := range inputLines {
+		actionList.Notes =
+			append(actionList.Notes, *NewNote(&line))
 	}
 
 	return &actionList
