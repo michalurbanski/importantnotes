@@ -2,13 +2,14 @@ package main
 
 import (
 	"fmt"
+	"importantnotes/finders"
 	"importantnotes/models"
 	"importantnotes/readers/filereader"
 	"log"
 )
 
 func main() {
-	fmt.Println("Starting program")
+	fmt.Println("Starting program...")
 
 	path := "./data/input.txt"
 	lines, err := filereader.ReadLines(path)
@@ -16,26 +17,12 @@ func main() {
 		log.Fatal(err) // calls os.Exit(1) automatically
 	}
 
-	inputLine := &models.InputLine{Number: 1, Text: "text"}
-	note := models.NewNote(inputLine)
-	fmt.Println(note)
+	// Find very important and important notes
+	actionList := models.NewActionList(lines)
+	priorityNotes := finders.FindPriorityNotes(actionList)
 
-	fmt.Println(lines)
-	fmt.Println(len(lines))
-
-	// lines := []string{}
-
-	// for {
-	// 	_, err := fmt.Fscanln(file, lines)
-	// 	if err != nil {
-	// 		if err == io.EOF {
-	// 			break
-	// 		} else {
-	// 			fmt.Println("Scan error: ", err)
-	// 			return
-	// 		}
-	// 	}
-	// }
+	fmt.Println("Following priority tasks were found:")
+	fmt.Println(priorityNotes)
 
 	fmt.Println("Program finished.")
 }
