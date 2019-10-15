@@ -13,10 +13,7 @@ func main() {
 	path := "./data/input.txt"
 	lines, err := filereader.ReadLines(path)
 	if err != nil {
-		log.Fatal(err)
-		//panic("Something went wrong") // panic message is not printed when
-		// log.Fatal() is used
-		return
+		log.Fatal(err) // calls os.Exit(1) automatically
 	}
 
 	inputLine := &models.InputLine{Number: 1, Text: "text"}
