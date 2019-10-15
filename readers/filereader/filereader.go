@@ -2,21 +2,27 @@ package filereader
 
 import (
 	"bufio"
+	"importantnotes/models"
 	"os"
 )
 
-// ReadLines reads all lines from a specified file
-func ReadLines(path string) ([]string, error) {
+// ReadLines reads all lines from a specified file.
+func ReadLines(path string) ([]models.InputLine, error) {
+	results := []models.InputLine{}
 	file, err := os.Open(path)
 	if err != nil {
 		return nil, err
 	}
 	defer file.Close()
 
-	var lines []string
+	// We want to capture also lines to be able to capture them later in ediotr.
+	// Due to this lines' calculation starts from 1.
+	lineCounter := 1
 	scanner := bufio.NewScanner(file)
 	for scanner.Scan() {
-		lines = append(lines, scanner.Text())
+		line := models.InputLine{Number: lineCounter, Text: scanner.Text()}
+		results = append(results, line)
+		lineCounter++
 	}
 
 	// Check for any errors while reading the file
@@ -24,5 +30,5 @@ func ReadLines(path string) ([]string, error) {
 		return nil, scanner.Err()
 	}
 
-	return lines, nil
+	return results, nil
 }
