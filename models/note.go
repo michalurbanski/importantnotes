@@ -1,6 +1,8 @@
 package models
 
-import "importantnotes/enums"
+import (
+	"importantnotes/enums"
+)
 
 // Note represents a note - one line in an input file
 // Each line has its own importance

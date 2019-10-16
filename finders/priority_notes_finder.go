@@ -11,6 +11,7 @@ func FindPriorityNotes(actionList *models.ActionList) *models.ActionList {
 	var priorityNotes []models.Note
 
 	for _, note := range actionList.Notes {
+		// TODO: notes types can be passed as parameter
 		if note.Importance == enums.Important ||
 			note.Importance == enums.VeryImportant {
 			priorityNotes = append(priorityNotes, note)

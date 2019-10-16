@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"importantnotes/finders"
 	"importantnotes/models"
+	"importantnotes/processors"
 	"importantnotes/readers/filereader"
 	"log"
 )
@@ -20,6 +21,7 @@ func main() {
 	// Find very important and important notes
 	actionList := models.NewActionList(lines)
 	priorityNotes := finders.FindPriorityNotes(actionList)
+	processors.SortByPriority(*priorityNotes)
 
 	fmt.Println("Following priority tasks were found:")
 	fmt.Println(priorityNotes)
