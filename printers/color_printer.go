@@ -14,7 +14,7 @@ var colors = map[enums.Importance]color.Color{
 	enums.Important:     color.Yellow,
 }
 
-func (p Printer) Print(actionList models.ActionList) {
+func (Printer) Print(actionList models.ActionList) {
 	for _, note := range actionList.Notes {
 		c := colors[note.Importance]
 		c.Println(note)
