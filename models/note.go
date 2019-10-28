@@ -1,6 +1,7 @@
 package models
 
 import (
+	"fmt"
 	"importantnotes/enums"
 )
 
@@ -24,4 +25,8 @@ func NewNote(inputLine *InputLine) *Note {
 		LineNumber: inputLine.Number,
 		Text:       inputLine.Text,
 		Importance: importance}
+}
+
+func (n Note) String() string {
+	return fmt.Sprintf("%d: %s", n.LineNumber, n.Text)
 }

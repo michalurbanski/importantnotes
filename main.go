@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"importantnotes/finders"
 	"importantnotes/models"
+	"importantnotes/printers"
 	"importantnotes/processors"
 	"importantnotes/readers/filereader"
 	"log"
@@ -24,7 +25,10 @@ func main() {
 	processors.SortByPriority(*priorityNotes)
 
 	fmt.Println("Following priority tasks were found:")
-	fmt.Println(priorityNotes)
+	//fmt.Println(priorityNotes)
+
+	colorPrinter := printers.Printer{}
+	colorPrinter.Print(*priorityNotes)
 
 	fmt.Println("Program finished.")
 }

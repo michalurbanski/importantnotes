@@ -31,8 +31,9 @@ func (a *ActionList) Len() int {
 func (a *ActionList) String() string {
 	var builder strings.Builder
 	for _, note := range a.Notes {
-		builder.WriteString(fmt.Sprintf("%d: %s\n", note.LineNumber, note.Text))
+		//builder.WriteString(fmt.Sprintf("%d: %s\n", note.LineNumber, note.Text))
+		builder.WriteString(fmt.Sprintf("%s\n", note.String()))
 	}
 
-	return builder.String()
+	return strings.TrimRight(builder.String(), "\n")
 }
