@@ -16,14 +16,16 @@ func TestDetermineImportanceBasedOnLine(t *testing.T) {
 	}
 
 	for _, c := range cases {
-		result, err := DetermineNoteImportance(c.input)
-		if err != nil {
-			t.Errorf("Error parsing line %s, %s", c.input, err)
-		}
+		t.Run(c.input, func(t *testing.T) {
+			result, err := DetermineNoteImportance(c.input)
+			if err != nil {
+				t.Errorf("Error parsing line %s, %s", c.input, err)
+			}
 
-		if result != c.result {
-			t.Errorf("Error: %s is '%s', but should be '%s'\n",
-				c.input, result, c.result)
-		}
+			if result != c.result {
+				t.Errorf("Error: %q is %q, but should be %q\n",
+					c.input, result, c.result)
+			}
+		})
 	}
 }
