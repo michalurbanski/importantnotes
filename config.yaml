@@ -1,0 +1,3 @@
+fileReader:
+  start_tag: "#@<"
+  end_tag: "#@>"

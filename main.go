@@ -10,8 +10,12 @@ import (
 	"log"
 )
 
+var configFileName = "config.yaml"
+
 func main() {
 	fmt.Println("Starting program...")
+
+	//config := configuration.GetConfig(configFileName)
 
 	path := "./data/input.txt"
 	lines, err := filereader.ReadLines(path)
