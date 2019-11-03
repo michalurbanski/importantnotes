@@ -3,11 +3,12 @@ package filereader
 import (
 	"bufio"
 	"importantnotes/models"
+	"importantnotes/parsers"
 	"os"
 )
 
 // ReadLines reads all lines from a specified file.
-func ReadLines(path string) ([]models.InputLine, error) {
+func ReadLines(path string, inputLineParser parsers.InputLineParser) ([]models.InputLine, error) {
 	results := []models.InputLine{}
 	file, err := os.Open(path)
 	if err != nil {
@@ -15,13 +16,10 @@ func ReadLines(path string) ([]models.InputLine, error) {
 	}
 	defer file.Close()
 
-	// We want to capture also lines to be able to capture them later in ediotr.
-	// Due to this lines' calculation starts from 1.
 	lineCounter := 1
 	scanner := bufio.NewScanner(file)
 	for scanner.Scan() {
-		line := models.InputLine{Number: lineCounter, Text: scanner.Text()}
-		results = append(results, line)
+		results = inputLineParser.ParseLine(lineCounter, scanner.Text(), results)
 		lineCounter++
 	}
 
