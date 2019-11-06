@@ -7,7 +7,8 @@ import (
 )
 
 // Here, for test purposes, it doesn't matter what value is set.
-// In application configuration file these values will be more unique.
+// In application configuration file these values will be more unique, comparing
+// to the real content that might appear.
 var startTag = "aaa"
 var endTag = "bbb"
 
