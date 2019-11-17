@@ -19,7 +19,10 @@ func ReadLines(path string, inputLineParser parsers.InputLineParser) ([]models.I
 	lineCounter := 1
 	scanner := bufio.NewScanner(file)
 	for scanner.Scan() {
-		results = inputLineParser.ParseLine(lineCounter, scanner.Text(), results)
+		results, err = inputLineParser.ParseLine(lineCounter, scanner.Text(), results)
+		if err != nil {
+			return results, err
+		}
 		lineCounter++
 	}
 

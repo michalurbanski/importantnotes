@@ -15,9 +15,13 @@ func TestAllLinesAreUsed(t *testing.T) {
 		2: "Second line",
 	}
 
+	var err error
 	results := []models.InputLine{}
 	for lineNumber, text := range input {
-		results = parser.ParseLine(lineNumber, text, results)
+		results, err = parser.ParseLine(lineNumber, text, results)
+		if err != nil {
+			t.Error(err)
+		}
 	}
 
 	asserter.Equal(len(results), len(input))
