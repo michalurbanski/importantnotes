@@ -6,67 +6,19 @@ import (
 	"regexp"
 )
 
-type Tag struct {
-	Name    string
-	IsFound bool
-}
-
-func (t *Tag) IsEmpty() bool {
-	return len(t.Name) == 0
-}
-
-type TempParser struct {
+// StartEndParser is used to parse lines when start tag and/or end tag are provided in the configuration.
+type StartEndParser struct {
 	StartTag *Tag
 	EndTag   *Tag
 }
 
-type Checker interface {
-	Check(text string) (bool, error)
-}
+// ParseLine adds line to results only when it's between start and end tags.
+func (parser StartEndParser) ParseLine(
+	lineNumber int,
+	text string,
+	results []models.InputLine) ([]models.InputLine, error) {
 
-type StartTagChecker struct {
-	Tag *Tag
-}
-
-func (checker *StartTagChecker) Check(text string) (checkNext bool, outErr error) {
-	match, err := isMatch(text, checker.Tag.Name)
-	if err != nil {
-		return false, err
-	}
-
-	if match {
-		checker.Tag.IsFound = true
-	}
-
-	// Checker exists only because tag was not found.
-	// So if it's not found in currently processed line, it means that we're before
-	// start tag, and lines should not be read.
-
-	// If tag was found in current line, this line also shouldn't be processed.
-	return false, nil
-}
-
-type EndTagChecker struct {
-	Tag *Tag
-}
-
-func (checker *EndTagChecker) Check(text string) (checkNext bool, outErr error) {
-	match, err := isMatch(text, checker.Tag.Name)
-	if err != nil {
-		return false, err
-	}
-
-	if match {
-		checker.Tag.IsFound = true
-		return false, nil
-	}
-
-	// No tag in the current line
-	return true, nil
-}
-
-func (parser TempParser) ParseLine(lineNumber int, text string, results []models.InputLine) ([]models.InputLine, error) {
-	read, err := parser.shouldR(text)
+	read, err := parser.shouldRead(text)
 	if err != nil {
 		fmt.Println(err)
 		return results, err
@@ -82,7 +34,7 @@ func (parser TempParser) ParseLine(lineNumber int, text string, results []models
 
 // Validate checks whether before reading next line it can be already be determined if it should be read or not.
 // If it cannot be determined, then returns collection of checkers that should be used to check whether line should be read.
-func (parser TempParser) Validate() (shouldRead bool, checkers []Checker) {
+func (parser StartEndParser) validate() (shouldRead bool, checkers []Checker) {
 	cks := []Checker{}
 
 	// If there are not tags provided, then each line should be read.
@@ -106,8 +58,8 @@ func (parser TempParser) Validate() (shouldRead bool, checkers []Checker) {
 	return true, cks
 }
 
-func (parser TempParser) shouldR(text string) (bool, error) {
-	shouldRead, checkers := parser.Validate()
+func (parser StartEndParser) shouldRead(text string) (bool, error) {
+	shouldRead, checkers := parser.validate()
 	if shouldRead == false {
 		return false, nil
 	}

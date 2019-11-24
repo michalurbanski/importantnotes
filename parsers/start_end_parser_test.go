@@ -14,7 +14,7 @@ var endTag = "bbb"
 
 func TestLineWithStartTagIsNotIncludedInResults(t *testing.T) {
 	asserter := test.Asserter{T: t}
-	parser := TempParser{StartTag: &Tag{Name: startTag}, EndTag: &Tag{}}
+	parser := StartEndParser{StartTag: &Tag{Name: startTag}, EndTag: &Tag{}}
 
 	results := []models.InputLine{}
 	results, err := parser.ParseLine(1, startTag, results)
@@ -27,7 +27,7 @@ func TestLineWithStartTagIsNotIncludedInResults(t *testing.T) {
 
 func TestEmptyStartTagLineIsRead(t *testing.T) {
 	asserter := test.Asserter{T: t}
-	parser := TempParser{StartTag: &Tag{Name: ""}, EndTag: &Tag{}} // No end tag specified, all lines should be read
+	parser := StartEndParser{StartTag: &Tag{Name: ""}, EndTag: &Tag{}} // No end tag specified, all lines should be read
 
 	results := []models.InputLine{}
 	results, err := parser.ParseLine(1, startTag, results)
@@ -40,7 +40,7 @@ func TestEmptyStartTagLineIsRead(t *testing.T) {
 
 func TestLineWithEndTagIsNotIncludedInResults(t *testing.T) {
 	asserter := test.Asserter{T: t}
-	parser := TempParser{StartTag: &Tag{}, EndTag: &Tag{Name: endTag}} // TODO: make constructor to ensure that properties are filled
+	parser := StartEndParser{StartTag: &Tag{}, EndTag: &Tag{Name: endTag}} // TODO: make constructor to ensure that properties are filled
 
 	results := []models.InputLine{}
 	results, err := parser.ParseLine(1, endTag, results)
@@ -53,7 +53,7 @@ func TestLineWithEndTagIsNotIncludedInResults(t *testing.T) {
 
 func TestLinesBeforeStartTagAreNotIncludedInResults(t *testing.T) {
 	asserter := test.Asserter{T: t}
-	parser := TempParser{StartTag: &Tag{Name: startTag}, EndTag: &Tag{}}
+	parser := StartEndParser{StartTag: &Tag{Name: startTag}, EndTag: &Tag{}}
 
 	results := []models.InputLine{}
 	lines := []string{
@@ -76,7 +76,7 @@ func TestLinesBeforeStartTagAreNotIncludedInResults(t *testing.T) {
 
 func TestLinesAfterEndTagShouldNotBeRead(t *testing.T) {
 	asserter := test.Asserter{T: t}
-	parser := TempParser{StartTag: &Tag{}, EndTag: &Tag{Name: endTag}}
+	parser := StartEndParser{StartTag: &Tag{}, EndTag: &Tag{Name: endTag}}
 
 	results := []models.InputLine{}
 	lines := []string{
@@ -99,7 +99,7 @@ func TestLinesAfterEndTagShouldNotBeRead(t *testing.T) {
 
 func TestOnlyLinesBetweenTagsShouldBeRead(t *testing.T) {
 	asserter := test.Asserter{T: t}
-	parser := TempParser{StartTag: &Tag{Name: startTag}, EndTag: &Tag{Name: endTag}}
+	parser := StartEndParser{StartTag: &Tag{Name: startTag}, EndTag: &Tag{Name: endTag}}
 
 	lineThatShouldBeFound := "This line should be found"
 

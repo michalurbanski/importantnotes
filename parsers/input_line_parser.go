@@ -16,7 +16,7 @@ type InputLineParser interface {
 // NOTE: actually this is overengineering for only one checker (or two, counting the default one).
 func SelectInputLinesParser(config configuration.Configuration) InputLineParser {
 	inputLinesParsers := map[configuration.ConfigurationChecker]InputLineParser{
-		configuration.StartEndChecker{}: TempParser{
+		configuration.StartEndChecker{}: StartEndParser{
 			StartTag: &Tag{Name: config.FileReader.Start_Tag},
 			EndTag:   &Tag{Name: config.FileReader.End_Tag},
 		},
