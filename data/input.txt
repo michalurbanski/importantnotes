@@ -1,6 +1,10 @@
+! This line should be skipped as it's before start tag
+#@<
 First line
 Second line
 ! important line
 !!! very important line
 Another simple line
 Line not starting from ! is just a regular line
+#@>
+!!! This very important line also should be skipped as it's after end tag

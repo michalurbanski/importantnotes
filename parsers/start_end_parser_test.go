@@ -17,7 +17,7 @@ func TestLineWithStartTagIsNotIncludedInResults(t *testing.T) {
 	parser := TempParser{StartTag: &Tag{Name: startTag}, EndTag: &Tag{}}
 
 	results := []models.InputLine{}
-	results, err := parser.Parse(1, startTag, results)
+	results, err := parser.ParseLine(1, startTag, results)
 	if err != nil {
 		t.Error(err)
 	}
@@ -30,7 +30,7 @@ func TestEmptyStartTagLineIsRead(t *testing.T) {
 	parser := TempParser{StartTag: &Tag{Name: ""}, EndTag: &Tag{}} // No end tag specified, all lines should be read
 
 	results := []models.InputLine{}
-	results, err := parser.Parse(1, startTag, results)
+	results, err := parser.ParseLine(1, startTag, results)
 	if err != nil {
 		t.Error(err)
 	}
@@ -43,7 +43,7 @@ func TestLineWithEndTagIsNotIncludedInResults(t *testing.T) {
 	parser := TempParser{StartTag: &Tag{}, EndTag: &Tag{Name: endTag}} // TODO: make constructor to ensure that properties are filled
 
 	results := []models.InputLine{}
-	results, err := parser.Parse(1, endTag, results)
+	results, err := parser.ParseLine(1, endTag, results)
 	if err != nil {
 		t.Error(err)
 	}
@@ -65,7 +65,7 @@ func TestLinesBeforeStartTagAreNotIncludedInResults(t *testing.T) {
 
 	var err error
 	for index, line := range lines {
-		results, err = parser.Parse(index, line, results)
+		results, err = parser.ParseLine(index, line, results)
 		if err != nil {
 			t.Error(err)
 		}
@@ -88,7 +88,7 @@ func TestLinesAfterEndTagShouldNotBeRead(t *testing.T) {
 
 	var err error
 	for index, line := range lines {
-		results, err = parser.Parse(index, line, results)
+		results, err = parser.ParseLine(index, line, results)
 		if err != nil {
 			t.Error(err)
 		}
@@ -115,7 +115,7 @@ func TestOnlyLinesBetweenTagsShouldBeRead(t *testing.T) {
 
 	var err error
 	for index, line := range lines {
-		results, err = parser.Parse(index, line, results)
+		results, err = parser.ParseLine(index, line, results)
 		if err != nil {
 			t.Error(err)
 		}
