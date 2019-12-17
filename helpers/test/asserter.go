@@ -8,7 +8,9 @@ type Asserter struct {
 }
 
 // Equal checks if two values are equal.
+//
 // a - expected
+//
 // b - actual
 func (m *Asserter) Equal(a, b interface{}) {
 	// https://www.tobstarr.com/2017/06/16/better-test-helpers-in-go/
