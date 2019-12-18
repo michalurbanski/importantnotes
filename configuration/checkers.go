@@ -1,7 +1,7 @@
 package configuration
 
-// ConfigurationChecker checks if configuration has specific element.
-type ConfigurationChecker interface {
+// Checker checks if configuration has specific element.
+type Checker interface {
 	Check(Configuration) bool
 }
 
@@ -10,6 +10,7 @@ type StartEndChecker struct {
 }
 
 // Check verifies if StartEndChecker can be used.
+// It can be used when at least one of the tags (start_tag, end_tag) is defined.
 func (checker StartEndChecker) Check(configuration Configuration) bool {
 	return len(configuration.FileReader.Start_Tag) > 0 ||
 		len(configuration.FileReader.End_Tag) > 0
