@@ -7,14 +7,19 @@ import (
 	"github.com/gookit/color"
 )
 
-type Printer struct{}
+// ColorPrinter prints ActionList in colors, based on note priority.
+type ColorPrinter struct{}
 
 var colors = map[enums.Importance]color.Color{
 	enums.VeryImportant: color.Red,
 	enums.Important:     color.Yellow,
 }
 
-func (Printer) Print(actionList models.ActionList) {
+// Print prints note in color based on priority.
+//
+// Red: very important note
+// Yellow: important note
+func (ColorPrinter) Print(actionList models.ActionList) {
 	for _, note := range actionList.Notes {
 		c := colors[note.Importance]
 		c.Println(note)

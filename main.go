@@ -34,7 +34,7 @@ func main() {
 
 	fmt.Println("Following priority tasks were found:")
 
-	colorPrinter := printers.Printer{}
+	colorPrinter := printers.ColorPrinter{}
 	colorPrinter.Print(*priorityNotes)
 
 	fmt.Println("Program finished.")
