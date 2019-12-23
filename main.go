@@ -20,9 +20,9 @@ func main() {
 
 	// TODO: use line parsers based on config values
 	config := configuration.GetConfig(configFileName)
-	selectedParser := parsers.SelectInputLinesParser(config)
+	parser := parsers.SelectInputLinesParser(config)
 
-	lines, err := filereader.ReadLines(path, selectedParser)
+	lines, err := filereader.ReadLines(path, parser)
 	if err != nil {
 		log.Fatal(err) // calls os.Exit(1) automatically
 	}
