@@ -1,5 +1,7 @@
 package parsers
 
 type Checker interface {
-	Check(text string) (bool, error)
+	Check(text string) (checkNext bool, outErr error)
+	IsTagFound() bool
+	GetTag() Tag
 }
