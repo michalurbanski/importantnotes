@@ -1,28 +1,25 @@
 package parsers
 
-// import (
-// 	"importantnotes/helpers/test"
-// 	"importantnotes/models"
-// 	"testing"
-// )
+import (
+	"importantnotes/helpers/test"
+	"importantnotes/models"
+	"testing"
+)
 
-// func TestAllLinesAreUsed(t *testing.T) {
-// 	asserter := test.Asserter{T: t}
-// 	parser := StandardLineParser{}
+func Test_StandardLineParser_all_input_lines_are_read(t *testing.T) {
+	asserter := test.Asserter{T: t}
+	parser := StandardLineParser{}
+	input := [...]string{"First line", "Second line"}
 
-// 	input := map[int]string{
-// 		1: "First line",
-// 		2: "Second line",
-// 	}
+	results := []*models.InputLine{}
+	for lineNumber, text := range input {
+		line, err := parser.ParseLine(lineNumber, text)
+		if err != nil {
+			t.Error(err)
+		}
 
-// 	var err error
-// 	results := []models.InputLine{}
-// 	for lineNumber, text := range input {
-// 		results, err = parser.ParseLine(lineNumber, text, results)
-// 		if err != nil {
-// 			t.Error(err)
-// 		}
-// 	}
+		results = append(results, line)
+	}
 
-// 	asserter.Equal(len(results), len(input))
-// }
+	asserter.Equal(len(input), len(results))
+}
