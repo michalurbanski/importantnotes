@@ -1,20 +1,21 @@
 package parsers
 
 import (
+	"errors"
 	"importantnotes/models"
 )
 
-// New version of start_end_parser.go - TODO: remove the old one after rewrite is completed.
-
+// StartEndTagParser is used to read lines between start and end tag.
 type StartEndTagParser struct {
 	handler LineHandler
 }
 
-// Can be created only when one of the tags is present.
+// NewStartEndTagParser creates a new StartEndTagParser based on tags.
+// Can created only when one of the tags is present.
 func NewStartEndTagParser(startTag Tag, endTag Tag) *StartEndTagParser {
 	parser := new(StartEndTagParser)
 
-	// Chain handlers in a correct order.
+	// Chain handlers in the correct order.
 	var endTagHandler LineHandler
 	var firstTagHandler LineHandler
 
@@ -32,6 +33,11 @@ func NewStartEndTagParser(startTag Tag, endTag Tag) *StartEndTagParser {
 	return parser
 }
 
+// ParseLine processes lines between start and end tag.
 func (parser *StartEndTagParser) ParseLine(lineNumber int, text string) (*models.InputLine, error) {
+	if parser.handler == nil {
+		return nil, errors.New("No handlers defined for this parser. Do you intend to use a different parser?")
+	}
+
 	return parser.handler.Handle(lineNumber, text)
 }

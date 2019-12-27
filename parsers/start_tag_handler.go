@@ -1,24 +1,25 @@
 package parsers
 
-//TODO: clean comments in this file
-
 import (
 	"fmt"
 	"importantnotes/models"
 	"regexp"
 )
 
+// LineHandler defines interface for line handlers.
 type LineHandler interface {
 	Handle(lineNumber int, text string) (*models.InputLine, error)
 }
 
-type StartTagHandler struct { // TODO: add constructor for both handlers to set IsEnabled to true
+// StartTagHandler decides how to handle line when start tag is present.
+type StartTagHandler struct {
 	Next        LineHandler
 	IsEnabled   bool
 	SearchedTag Tag
 	Matcher     Matcher
 }
 
+// NewStartTagHandler creates a new StartTagHandler.
 func NewStartTagHandler(lineHandler LineHandler, tag Tag) *StartTagHandler {
 	return &StartTagHandler{
 		IsEnabled:   true,
@@ -27,6 +28,8 @@ func NewStartTagHandler(lineHandler LineHandler, tag Tag) *StartTagHandler {
 	}
 }
 
+// Handle for StartTagHandler returns line if start tag was found.
+// It does not return lines before start tag, or when line starts with start tag.
 func (handler *StartTagHandler) Handle(lineNumber int, text string) (*models.InputLine, error) {
 	if handler.IsEnabled {
 		isMatch, err := handler.Matcher.IsMatch(text, handler.SearchedTag.Name)
@@ -54,12 +57,14 @@ func (handler *StartTagHandler) Handle(lineNumber int, text string) (*models.Inp
 	}
 }
 
+// EndTagHandler decides how to handle line when end tag is present.
 type EndTagHandler struct {
 	IsEnabled   bool
 	SearchedTag Tag
 	Matcher     Matcher
 }
 
+// NewEndTagHandler creates a new EndTagHandler.
 func NewEndTagHandler(tag Tag) *EndTagHandler {
 	return &EndTagHandler{
 		IsEnabled:   true,
@@ -67,6 +72,8 @@ func NewEndTagHandler(tag Tag) *EndTagHandler {
 	}
 }
 
+// Handle for EndTagHandler returns line until end tag is found.
+// It does not return lines after end tag, or when line starts with end tag.
 func (handler *EndTagHandler) Handle(lineNumber int, text string) (*models.InputLine, error) {
 	if handler.IsEnabled {
 		// If endtag was found then disable it
@@ -84,13 +91,15 @@ func (handler *EndTagHandler) Handle(lineNumber int, text string) (*models.Input
 
 		return &models.InputLine{Number: lineNumber, Text: text}, nil
 	} else {
-		// tag was found so it doesn't make sense to search further
+		// Tag was found so it doesn't make sense to search further
 		return nil, nil
 	}
 }
 
+// Matcher contains helper methods used to find tag in line.
 type Matcher struct{}
 
+// IsMatch checks if line starts from tag.
 func (matcher Matcher) IsMatch(text string, tag string) (isMatch bool, outErr error) {
 	if len(tag) == 0 {
 		return false, nil

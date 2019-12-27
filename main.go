@@ -18,7 +18,6 @@ var path = "./data/input.txt"
 func main() {
 	fmt.Println("Starting program...")
 
-	// TODO: use line parsers based on config values
 	config := configuration.GetConfig(configFileName)
 	parser := parsers.SelectInputLinesParser(config)
 

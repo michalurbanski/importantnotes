@@ -7,7 +7,8 @@ import (
 	"os"
 )
 
-// ReadLines reads all lines from a specified file.
+// ReadLines reads all lines from a specified file, using specified line parser.
+// Line parser can influence which lines are read.
 func ReadLines(path string, inputLineParser parsers.InputLineParser) ([]models.InputLine, error) {
 	results := []models.InputLine{}
 	file, err := os.Open(path)
@@ -20,7 +21,6 @@ func ReadLines(path string, inputLineParser parsers.InputLineParser) ([]models.I
 	scanner := bufio.NewScanner(file)
 	for scanner.Scan() {
 		// TODO: Optimization worth doing - if both parsers are disabled then it doesn't make sense to read anymore lines
-		//results, err = inputLineParser.ParseLine(lineCounter, scanner.Text(), results)
 		line, err := inputLineParser.ParseLine(lineCounter, scanner.Text())
 		if err != nil {
 			return results, err
