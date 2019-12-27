@@ -8,8 +8,10 @@ import (
 // StartEndParser is used to parse lines when start tag and/or end tag are provided in the configuration.
 // It contains information on how Start and End tags are set.
 type StartEndParser struct {
-	StartTag Tag
-	EndTag   Tag
+	StartTagChecker StartTagChecker
+	EndTagChecker   EndTagChecker
+	StartTag        Tag
+	EndTag          Tag
 }
 
 // SetTagFound sets tag as found when it's encountered in a line.
@@ -26,6 +28,19 @@ func (parser *StartEndParser) SetTagFound(tag Tag) {
 
 // ParseLine adds line to the results only when it's between start and end tags.
 func (parser *StartEndParser) ParseLine(lineNumber int, text string, results []models.InputLine) ([]models.InputLine, error) {
+	// Iterate over checkers
+	// If checker is enabled then it checks whether line is a tag
+	// -- if it's not a tag, then it continues to a next line, as it has not be satisified
+	// -- if it's a tag, then disable checker and continue to next line
+	// If checker is disabled, then let next checker to decide what to do with the line
+
+	// If checker is enabeld then it checks whether line is a tab
+	// -- if it's not a tag, then it reads line
+	// -- if it's a tag, then it continues to the next line
+
+	// If both checkers are disabled then further line should be read
+	//var a LineHandler = &StartTagHandler{Next: &EndTagHandler{}}
+
 	read, err := parser.shouldRead(text)
 	if err != nil {
 		return results, err

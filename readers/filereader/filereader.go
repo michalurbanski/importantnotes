@@ -19,10 +19,16 @@ func ReadLines(path string, inputLineParser parsers.InputLineParser) ([]models.I
 	lineCounter := 1
 	scanner := bufio.NewScanner(file)
 	for scanner.Scan() {
-		results, err = inputLineParser.ParseLine(lineCounter, scanner.Text(), results)
+		// TODO: Optimization worth doing - if both parsers are disabled then it doesn't make sense to read anymore lines
+		//results, err = inputLineParser.ParseLine(lineCounter, scanner.Text(), results)
+		line, err := inputLineParser.ParseLine(lineCounter, scanner.Text())
 		if err != nil {
 			return results, err
 		}
+		if line != nil {
+			results = append(results, *line)
+		}
+
 		lineCounter++
 	}
 

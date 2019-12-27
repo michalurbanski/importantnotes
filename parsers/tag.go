@@ -5,6 +5,6 @@ type Tag struct {
 	IsFound bool
 }
 
-func (t *Tag) IsEmpty() bool {
+func (t Tag) IsEmpty() bool {
 	return len(t.Name) == 0
 }
