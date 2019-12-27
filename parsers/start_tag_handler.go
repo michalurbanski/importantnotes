@@ -13,32 +13,32 @@ type LineHandler interface {
 
 // StartTagHandler decides how to handle line when start tag is present.
 type StartTagHandler struct {
-	Next        LineHandler
-	IsEnabled   bool
-	SearchedTag Tag
-	Matcher     Matcher
+	next        LineHandler
+	isEnabled   bool
+	searchedTag Tag
+	matcher     Matcher
 }
 
 // NewStartTagHandler creates a new StartTagHandler.
 func NewStartTagHandler(lineHandler LineHandler, tag Tag) *StartTagHandler {
 	return &StartTagHandler{
-		IsEnabled:   true,
-		SearchedTag: tag,
-		Next:        lineHandler,
+		isEnabled:   true,
+		searchedTag: tag,
+		next:        lineHandler,
 	}
 }
 
 // Handle for StartTagHandler returns line if start tag was found.
 // It does not return lines before start tag, or when line starts with start tag.
 func (handler *StartTagHandler) Handle(lineNumber int, text string) (*models.InputLine, error) {
-	if handler.IsEnabled {
-		isMatch, err := handler.Matcher.IsMatch(text, handler.SearchedTag.Name)
+	if handler.isEnabled {
+		isMatch, err := handler.matcher.IsMatch(text, handler.searchedTag.Name)
 		if err != nil {
 			return nil, err
 		}
 
 		if isMatch {
-			handler.IsEnabled = false
+			handler.isEnabled = false
 		}
 
 		return nil, nil // line should not be read
@@ -48,8 +48,8 @@ func (handler *StartTagHandler) Handle(lineNumber int, text string) (*models.Inp
 	} else {
 		// Start tag checker is disbaled that means start tag was found,
 		// and if second handler is OK with this line, then it can be read.
-		if handler.Next != nil {
-			return handler.Next.Handle(lineNumber, text)
+		if handler.next != nil {
+			return handler.next.Handle(lineNumber, text)
 		} else {
 			// If there's no second handler, then all notes after StartTag was found should be read
 			return &models.InputLine{Number: lineNumber, Text: text}, nil
