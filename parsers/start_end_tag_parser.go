@@ -34,7 +34,7 @@ func NewStartEndTagParser(startTag Tag, endTag Tag) *StartEndTagParser {
 }
 
 // ParseLine processes lines between start and end tag.
-func (parser *StartEndTagParser) ParseLine(lineNumber int, text string) (*models.InputLine, error) {
+func (parser StartEndTagParser) ParseLine(lineNumber int, text string) (*models.InputLine, error) {
 	if parser.handler == nil {
 		return nil, errors.New("No handlers defined for this parser. Do you intend to use a different parser?")
 	}
