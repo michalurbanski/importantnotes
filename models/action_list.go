@@ -6,7 +6,7 @@ import (
 )
 
 // ActionList represents notes for further processing.
-// TODO: based on priority_notes_finder_test this might be converted to []*Note
+// Each note in this collection has already determined importance.
 type ActionList struct {
 	Notes []Note
 }
@@ -16,8 +16,7 @@ func NewActionList(inputLines []InputLine) *ActionList {
 	actionList := ActionList{}
 
 	for _, line := range inputLines {
-		actionList.Notes =
-			append(actionList.Notes, *NewNote(&line))
+		actionList.Notes = append(actionList.Notes, *NewNote(&line))
 	}
 
 	return &actionList
@@ -30,6 +29,7 @@ func (a *ActionList) Len() int {
 
 func (a *ActionList) String() string {
 	var builder strings.Builder
+
 	for _, note := range a.Notes {
 		builder.WriteString(fmt.Sprintf("%s\n", note.String()))
 	}

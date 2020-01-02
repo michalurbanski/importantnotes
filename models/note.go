@@ -5,9 +5,9 @@ import (
 	"importantnotes/enums"
 )
 
-// Note represents a note - one line in an input file
-// Each line has its own importance
-// TODO: avoid uninitialized structures by making type private?
+// Note is a line in an input file.
+// Each line has its own importance.
+// Line number is important to easily find this note later in the input file.
 type Note struct {
 	LineNumber int
 	Text       string
