@@ -6,18 +6,13 @@ import (
 
 // TODO: http://golang-basic.blogspot.com/2014/07/step-by-step-guide-to-declaring-enums.html
 
-// Importance states how note is important
+// Importance states how note is important.
+//
 // There are three categories:
 // !!! Very important
 // ! Important
 // Regular note
 type Importance int
-
-// Status denotes whether note is:
-// - not started
-// - done
-// - aborted
-type Status int
 
 // TODO: how to wrap it
 const (
@@ -67,9 +62,3 @@ func DetermineNoteImportance(line string) (Importance, error) {
 
 	return Regular, nil
 }
-
-const (
-	NotStarted Status = iota
-	Done
-	Aborted
-)
