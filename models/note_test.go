@@ -6,31 +6,25 @@ import (
 	"testing"
 )
 
-// TODO: make these tests parameterized
-func TestCreatesNewNoteFromLine(t *testing.T) {
+func Test_creates_new_note_from_line_returns_correct_note(t *testing.T) {
 	a := &test.Asserter{T: t}
 
-	lineNumber := 1
-	line := "This is a regular line"
-	inputLine := &InputLine{Number: lineNumber, Text: line}
-	note := NewNote(inputLine)
+	cases := [...]struct {
+		input      string
+		importance enums.Importance
+	}{
+		{"This is a regular line", enums.Regular},
+		{"! This is important line", enums.Important},
+		{"!!! This is very important line", enums.VeryImportant},
+	}
 
-	a.Equal(note.LineNumber, lineNumber)
-	a.Equal(note.Text, line)
-	a.Equal(note.Importance, enums.Regular)
+	for _, c := range cases {
+		t.Run(c.input, func(t *testing.T) {
+			inputLine := &InputLine{Number: 1, Text: c.input}
+			note := NewNote(inputLine)
+			a.Equal(1, note.LineNumber)
+			a.Equal(c.input, note.Text)
+			a.Equal(c.importance, note.Importance)
+		})
+	}
 }
-
-func TestCreatesNewNoteForImportantLine(t *testing.T) {
-	a := &test.Asserter{T: t}
-
-	lineNumber := 2
-	line := "!!! This is very important line"
-	inputLine := &InputLine{Number: lineNumber, Text: line}
-	note := NewNote(inputLine)
-
-	a.Equal(note.LineNumber, lineNumber)
-	a.Equal(note.Text, line)
-	a.Equal(note.Importance, enums.VeryImportant)
-}
-
-//TODO: skip beginning of the line indicating importance when parsing line
