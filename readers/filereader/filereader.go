@@ -7,6 +7,7 @@ import (
 	"os"
 )
 
+// TODO: this operation should be enclosed into a separate struct and split into two responsibilities
 // ReadLines reads all lines from a specified file, using specified line parser.
 // Line parser can influence which lines are read.
 func ReadLines(path string, inputLineParser parsers.InputLineParser) ([]models.InputLine, error) {
@@ -29,6 +30,7 @@ func ReadLines(path string, inputLineParser parsers.InputLineParser) ([]models.I
 			results = append(results, *line)
 		}
 
+		// TODO: if line is nil then we should end searching
 		lineCounter++
 	}
 

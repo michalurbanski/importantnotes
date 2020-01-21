@@ -41,3 +41,8 @@ func (parser StartEndTagParser) ParseLine(lineNumber int, text string) (*models.
 
 	return parser.handler.Handle(lineNumber, text)
 }
+
+// IsEnabled checks if any of the defined handlers are still enabled.
+func (parser StartEndTagParser) IsEnabled() bool {
+	return parser.handler.IsEnabled()
+}

@@ -9,6 +9,7 @@ import (
 // LineHandler defines interface for line handlers.
 type LineHandler interface {
 	Handle(lineNumber int, text string) (*models.InputLine, error)
+	IsEnabled() bool
 }
 
 // StartTagHandler decides how to handle line when start tag is present.
@@ -57,35 +58,43 @@ func (handler *StartTagHandler) Handle(lineNumber int, text string) (*models.Inp
 	}
 }
 
+func (handler *StartTagHandler) IsEnabled() bool {
+	if handler.next != nil {
+		return handler.next.IsEnabled()
+	}
+
+	return handler.isEnabled
+}
+
 // EndTagHandler decides how to handle line when end tag is present.
 type EndTagHandler struct {
-	IsEnabled   bool
-	SearchedTag Tag
-	Matcher     Matcher
+	isEnabled   bool
+	searchedTag Tag
+	matcher     Matcher
 }
 
 // NewEndTagHandler creates a new EndTagHandler.
 func NewEndTagHandler(tag Tag) *EndTagHandler {
 	return &EndTagHandler{
-		IsEnabled:   true,
-		SearchedTag: tag,
+		isEnabled:   true,
+		searchedTag: tag,
 	}
 }
 
 // Handle for EndTagHandler returns line until end tag is found.
 // It does not return lines after end tag, or when line starts with end tag.
 func (handler *EndTagHandler) Handle(lineNumber int, text string) (*models.InputLine, error) {
-	if handler.IsEnabled {
+	if handler.isEnabled {
 		// If endtag was found then disable it
 		// If it wasn't found in this line then return line
 
-		isMatch, err := handler.Matcher.IsMatch(text, handler.SearchedTag.Name)
+		isMatch, err := handler.matcher.IsMatch(text, handler.searchedTag.Name)
 		if err != nil {
 			return nil, err
 		}
 
 		if isMatch {
-			handler.IsEnabled = false
+			handler.isEnabled = false
 			return nil, nil // When end tag was found then the current line should not be read, as it doesn't have note
 		}
 
@@ -94,6 +103,10 @@ func (handler *EndTagHandler) Handle(lineNumber int, text string) (*models.Input
 		// Tag was found so it doesn't make sense to search further
 		return nil, nil
 	}
+}
+
+func (handler *EndTagHandler) IsEnabled() bool {
+	return handler.isEnabled
 }
 
 // Matcher contains helper methods used to find tag in line.

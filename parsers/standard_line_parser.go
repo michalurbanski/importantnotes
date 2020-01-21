@@ -11,3 +11,9 @@ func (s StandardLineParser) ParseLine(lineNumber int, text string) (*models.Inpu
 	line := &models.InputLine{Number: lineNumber, Text: text}
 	return line, nil
 }
+
+// IsEnabled checks whether parsers is active.
+// As for StandardLineParser it's always enabled.
+func (s StandardLineParser) IsEnabled() bool {
+	return true
+}

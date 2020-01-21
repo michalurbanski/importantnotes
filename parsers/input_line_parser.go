@@ -9,6 +9,7 @@ import (
 // Parsers can be switched to parse line in a different way, using this interface.
 type InputLineParser interface {
 	ParseLine(lineNumber int, text string) (*models.InputLine, error)
+	IsEnabled() bool
 }
 
 // SelectInputLinesParser determines which parser should be used based on configuration.
