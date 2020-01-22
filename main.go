@@ -21,14 +21,11 @@ func main() {
 	config := configuration.GetConfig(configFileName)
 	parser := parsers.SelectInputLinesParser(config)
 
-	//lines, err := filereader.ReadLines(path, parser)
-	reader := filereader.NewFileReader(path, parser)
-	lines, err := reader.ReadLines()
+	fileReader := filereader.NewFileReader(path, parser)
+	lines, err := fileReader.ReadLines()
 	if err != nil {
 		log.Fatal(err) // calls os.Exit(1) automatically
 	}
-
-	fmt.Println("Total read lines is: ", len(lines), reader.TotalReadLines())
 
 	// Find very important and important notes
 	actionList := models.NewActionList(lines)
