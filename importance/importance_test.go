@@ -1,4 +1,4 @@
-package enums
+package importance
 
 import (
 	"testing"

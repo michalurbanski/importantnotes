@@ -2,7 +2,7 @@ package models
 
 import (
 	"fmt"
-	"importantnotes/enums"
+	"importantnotes/importance"
 )
 
 // Note is a line in an input file.
@@ -11,12 +11,12 @@ import (
 type Note struct {
 	LineNumber int
 	Text       string
-	Importance enums.Importance
+	Importance importance.Importance
 }
 
 // NewNote creates a note based on input line.
 func NewNote(inputLine *InputLine) *Note {
-	importance, err := enums.DetermineNoteImportance(inputLine.Text)
+	importance, err := importance.DetermineNoteImportance(inputLine.Text)
 	if err != nil {
 		panic("Incorrect line parsing")
 	}

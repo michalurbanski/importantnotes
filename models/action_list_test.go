@@ -1,8 +1,8 @@
 package models
 
 import (
-	"importantnotes/enums"
 	"importantnotes/helpers/test"
+	"importantnotes/importance"
 	"testing"
 )
 
@@ -20,5 +20,5 @@ func TestCreateValidActionList(t *testing.T) {
 	actionList := NewActionList(inputLines)
 
 	asserter.Equal(actionList.Len(), len(inputLines))
-	asserter.Equal(actionList.Notes[1].Importance, enums.VeryImportant)
+	asserter.Equal(actionList.Notes[1].Importance, importance.VeryImportant)
 }

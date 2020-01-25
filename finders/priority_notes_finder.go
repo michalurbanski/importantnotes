@@ -1,19 +1,19 @@
 package finders
 
 import (
-	"importantnotes/enums"
+	"importantnotes/importance"
 	"importantnotes/models"
 )
 
 // FindPriorityNotes finds those notes that are very important or important.
 // They should be acted on as a priority.
 func FindPriorityNotes(actionList *models.ActionList) *models.ActionList {
-	seek := []enums.Importance{enums.Important, enums.VeryImportant}
+	seek := []importance.Importance{importance.Important, importance.VeryImportant}
 
 	return findNotesWithImportance(actionList, seek)
 }
 
-func findNotesWithImportance(actionList *models.ActionList, importance []enums.Importance) *models.ActionList {
+func findNotesWithImportance(actionList *models.ActionList, importance []importance.Importance) *models.ActionList {
 	var priorityNotes []models.Note
 
 	for _, note := range actionList.Notes {
@@ -25,7 +25,7 @@ func findNotesWithImportance(actionList *models.ActionList, importance []enums.I
 	return &models.ActionList{Notes: priorityNotes}
 }
 
-func contains(statuses []enums.Importance, current enums.Importance) bool {
+func contains(statuses []importance.Importance, current importance.Importance) bool {
 	for _, a := range statuses {
 		if a == current {
 			return true
