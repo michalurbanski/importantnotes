@@ -168,3 +168,10 @@ func Test_StartEndTagParser_ParseLine_starttag_noendtag_lines_before_starttag_sh
 	asserter.Equal(3, results[0].Number)
 	asserter.Equal(lineThatShouldBeFound, results[0].Text)
 }
+
+func Test_StartEndTagParser_does_not_work_when_no_tags_are_defined(t *testing.T) {
+	parser := NewStartEndTagParser(Tag{}, Tag{})
+	if _, err := parser.ParseLine(1, "sample text"); err == nil {
+		t.Error("Expected error but none found")
+	}
+}
