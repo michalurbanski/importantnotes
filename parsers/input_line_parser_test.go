@@ -5,7 +5,7 @@ import (
 	"testing"
 )
 
-func Test_InputLineParser_when_no_tags_in_configuration_creates_StandardLineParser(t *testing.T) {
+func TestParsers_InputLineParser_WhenNoTagsInConfigurationCreatesStandardLineParser(t *testing.T) {
 	config := configuration.Configuration{}
 
 	lineParser := SelectInputLinesParser(config)
@@ -17,7 +17,7 @@ func Test_InputLineParser_when_no_tags_in_configuration_creates_StandardLinePars
 	}
 }
 
-func Test_InputLineParser_when_tags_are_in_configuration_creates_StandardEndTagParser(t *testing.T) {
+func TestParser_InputLineParser_WhenTagsInConfigurationCreatesStartEndTagParser(t *testing.T) {
 	config := configuration.Configuration{}
 	config.FileReader = struct {
 		Start_Tag string

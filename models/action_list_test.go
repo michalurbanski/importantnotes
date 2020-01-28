@@ -6,7 +6,7 @@ import (
 	"testing"
 )
 
-func TestCreateValidActionList(t *testing.T) {
+func TestModels_ActionList_CreateValidActionList(t *testing.T) {
 	asserter := test.Asserter{T: t}
 	inputLines := []InputLine{
 		InputLine{

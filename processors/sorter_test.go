@@ -6,7 +6,7 @@ import (
 	"testing"
 )
 
-func TestSortByPriorityMostImportantFirst(t *testing.T) {
+func TestProcessors_SortByPriority_MostImportantFirst(t *testing.T) {
 	asserter := test.Asserter{T: t}
 
 	inputLines := []models.InputLine{
@@ -27,7 +27,7 @@ func TestSortByPriorityMostImportantFirst(t *testing.T) {
 }
 
 // Proves that Stable function was used
-func TestSortByPriorityMostImportantFirstInReadOrder(t *testing.T) {
+func TestProcessors_SortByPriority_MostImportantFirstInReadOrder(t *testing.T) {
 	asserter := test.Asserter{T: t}
 
 	inputLines := []models.InputLine{

@@ -6,7 +6,7 @@ import (
 	"testing"
 )
 
-func TestFindPriorityNotes(t *testing.T) {
+func TestFinders_FindPriorityNotes(t *testing.T) {
 	asserter := test.Asserter{T: t}
 	inputLines := []models.InputLine{
 		models.InputLine{

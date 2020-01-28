@@ -6,7 +6,7 @@ import (
 	"testing"
 )
 
-func Test_StandardLineParser_all_input_lines_are_read(t *testing.T) {
+func TestParsers_StandardLineParserParseLine_AllInputLinesAreRead(t *testing.T) {
 	asserter := test.Asserter{T: t}
 	parser := StandardLineParser{}
 	input := [...]string{"First line", "Second line"}

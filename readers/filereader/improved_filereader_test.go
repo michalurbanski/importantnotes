@@ -9,7 +9,7 @@ import (
 	"testing"
 )
 
-func Test_reader_reads_all_lines_number_of_read_lines_is_equal_to_input_lines(t *testing.T) {
+func TestFilereader_LinesReaderReadLines_AllLinesReadLinesEqualToInputLines(t *testing.T) {
 	a := &test.Asserter{T: t}
 
 	var b strings.Builder
@@ -28,7 +28,7 @@ func Test_reader_reads_all_lines_number_of_read_lines_is_equal_to_input_lines(t 
 	a.Equal(2, linesReader.TotalReadLines())
 }
 
-func Test_reader_reads_only_lines_between_tags(t *testing.T) {
+func TestFilereader_LinesReaderReadLines_SomeLinesReadOnlyBetweenTags(t *testing.T) {
 	a := &test.Asserter{T: t}
 
 	var b strings.Builder

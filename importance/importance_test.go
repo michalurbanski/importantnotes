@@ -4,7 +4,7 @@ import (
 	"testing"
 )
 
-func TestDetermineImportanceBasedOnLine(t *testing.T) {
+func TestImportance_DetermineImportanceBasedOnLine(t *testing.T) {
 	cases := []struct {
 		input  string
 		result Importance

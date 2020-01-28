@@ -16,7 +16,7 @@ const endTagName = "bbb"
 var startTag = Tag{Name: startTagName}
 var endTag = Tag{Name: endTagName}
 
-func Test_StartEndTagParser_line_with_start_tag_is_not_included_in_results(t *testing.T) {
+func TestParsers_StartEndTagParserParseLine_LineWithStartTagIsNotIncludedInResults(t *testing.T) {
 	asserter := test.Asserter{T: t}
 	parser := NewStartEndTagParser(startTag, endTag)
 
@@ -28,7 +28,7 @@ func Test_StartEndTagParser_line_with_start_tag_is_not_included_in_results(t *te
 	asserter.IsNil(line)
 }
 
-func Test_StartEndTagParser_when_start_tag_is_empty_then_line_is_read(t *testing.T) {
+func TestParsers_StartEndTagParserParseLine_WhenStartTagIsEmptyLineIsRead(t *testing.T) {
 	asserter := test.Asserter{T: t}
 	parser := NewStartEndTagParser(Tag{Name: ""}, endTag)
 
@@ -40,7 +40,7 @@ func Test_StartEndTagParser_when_start_tag_is_empty_then_line_is_read(t *testing
 	asserter.IsNotNil(line)
 }
 
-func Test_StartEndTagParser_line_with_end_tag_is_not_included_in_results(t *testing.T) {
+func TestParsers_StartEndTagParserParseLine_LineWithEndTagIsNotIncludedInResults(t *testing.T) {
 	asserter := test.Asserter{T: t}
 	parser := NewStartEndTagParser(startTag, endTag)
 
@@ -52,7 +52,7 @@ func Test_StartEndTagParser_line_with_end_tag_is_not_included_in_results(t *test
 	asserter.IsNil(line)
 }
 
-func Test_StartEndTagParser_lines_before_start_tag_are_not_included_in_results(t *testing.T) {
+func TestParsers_StartEndTagParserParseLine_LinesBeforeStartTagNotIncludedInResults(t *testing.T) {
 	asserter := test.Asserter{T: t}
 	parser := NewStartEndTagParser(startTag, endTag)
 
@@ -78,7 +78,7 @@ func Test_StartEndTagParser_lines_before_start_tag_are_not_included_in_results(t
 	asserter.Equal(1, len(results))
 }
 
-func Test_StartEndTagParser_lines_after_end_tag_should_not_be_read(t *testing.T) {
+func TestParsers_StartEndTagParserParseLine_LinesAfterEndTagNotRead(t *testing.T) {
 	asserter := test.Asserter{T: t}
 	parser := NewStartEndTagParser(Tag{Name: ""}, endTag) // start tag is empty so lines before end tag should be read
 
@@ -104,7 +104,7 @@ func Test_StartEndTagParser_lines_after_end_tag_should_not_be_read(t *testing.T)
 	asserter.Equal(2, len(results))
 }
 
-func Test_StartEndTagParser_only_lines_between_tags_should_be_read(t *testing.T) {
+func TestParsers_StartEndTagParserParseLine_LinesBetweenTagsAreRead(t *testing.T) {
 	asserter := test.Asserter{T: t}
 	parser := NewStartEndTagParser(startTag, endTag)
 
@@ -136,7 +136,7 @@ func Test_StartEndTagParser_only_lines_between_tags_should_be_read(t *testing.T)
 	asserter.Equal(lineThatShouldBeFound, results[0].Text)
 }
 
-func Test_StartEndTagParser_ParseLine_starttag_noendtag_lines_before_starttag_should_not_be_read(t *testing.T) {
+func TestParsers_StartEndTagParserParseLine_StartTagEndTagLinesBeforeStartTagAreNotRead(t *testing.T) {
 	asserter := test.Asserter{T: t}
 	parser := NewStartEndTagParser(startTag, Tag{Name: ""})
 
@@ -169,7 +169,7 @@ func Test_StartEndTagParser_ParseLine_starttag_noendtag_lines_before_starttag_sh
 	asserter.Equal(lineThatShouldBeFound, results[0].Text)
 }
 
-func Test_StartEndTagParser_does_not_work_when_no_tags_are_defined(t *testing.T) {
+func TestParsers_StartEndTagParserParseLine_NoTags(t *testing.T) {
 	parser := NewStartEndTagParser(Tag{}, Tag{})
 	if _, err := parser.ParseLine(1, "sample text"); err == nil {
 		t.Error("Expected error but none found")
