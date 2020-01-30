@@ -37,5 +37,7 @@ func main() {
 	colorPrinter := printers.ColorPrinter{}
 	colorPrinter.Print(*priorityNotes)
 
+	fmt.Println("Number of read lines is: ", fileReader.TotalReadLines())
+
 	fmt.Println("Program finished.")
 }
