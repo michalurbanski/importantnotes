@@ -175,3 +175,27 @@ func TestParsers_StartEndTagParserParseLine_NoTags(t *testing.T) {
 		t.Error("Expected error but none found")
 	}
 }
+
+func TestParsers_StartEndTagParserParseLine_TagsDefinedButNoneInContent(t *testing.T) {
+	asserter := test.Asserter{T: t}
+	parser := NewStartEndTagParser(startTag, endTag)
+
+	results := []*models.InputLine{}
+	lines := [...]string{
+		"First line",
+		"Second line",
+	}
+
+	for index, line := range lines {
+		result, err := parser.ParseLine(index, line)
+		if err != nil {
+			t.Error(err)
+		}
+
+		if result != nil {
+			results = append(results, result)
+		}
+	}
+
+	asserter.Equal(0, len(results))
+}
