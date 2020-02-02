@@ -46,3 +46,11 @@ func (parser StartEndTagParser) ParseLine(lineNumber int, text string) (*models.
 func (parser StartEndTagParser) IsEnabled() bool {
 	return parser.handler.IsEnabled()
 }
+
+// Stats returns parser stats (whether line handlers were fired)
+func (parser StartEndTagParser) Stats() ParserStats {
+	return ParserStats{
+		IsStartTagHandlerFired: parser.handler.WasFired(),
+		IsEndTagHandlerFired:   parser.handler.Next().WasFired(),
+	}
+}

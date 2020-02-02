@@ -6,18 +6,13 @@ import (
 	"regexp"
 )
 
-// LineHandler defines interface for line handlers.
-type LineHandler interface {
-	Handle(lineNumber int, text string) (*models.InputLine, error)
-	IsEnabled() bool
-}
-
 // StartTagHandler decides how to handle line when start tag is present.
 type StartTagHandler struct {
 	next        LineHandler
 	isEnabled   bool
 	searchedTag Tag
 	matcher     Matcher
+	wasFired    bool
 }
 
 // NewStartTagHandler creates a new StartTagHandler.
@@ -40,6 +35,7 @@ func (handler *StartTagHandler) Handle(lineNumber int, text string) (*models.Inp
 
 		if isMatch {
 			handler.isEnabled = false
+			handler.wasFired = true
 		}
 
 		return nil, nil // line should not be read
@@ -66,11 +62,22 @@ func (handler *StartTagHandler) IsEnabled() bool {
 	return handler.isEnabled
 }
 
+// WasFired checks if line matching this handler was found.
+func (handler *StartTagHandler) WasFired() bool {
+	return handler.wasFired
+}
+
+// Next gets nested parser if defined.
+func (handler *StartTagHandler) Next() LineHandler {
+	return handler.next
+}
+
 // EndTagHandler decides how to handle line when end tag is present.
 type EndTagHandler struct {
 	isEnabled   bool
 	searchedTag Tag
 	matcher     Matcher
+	wasFired    bool
 }
 
 // NewEndTagHandler creates a new EndTagHandler.
@@ -95,6 +102,7 @@ func (handler *EndTagHandler) Handle(lineNumber int, text string) (*models.Input
 
 		if isMatch {
 			handler.isEnabled = false
+			handler.wasFired = true
 			return nil, nil // When end tag was found then the current line should not be read, as it doesn't have note
 		}
 
@@ -107,6 +115,14 @@ func (handler *EndTagHandler) Handle(lineNumber int, text string) (*models.Input
 
 func (handler *EndTagHandler) IsEnabled() bool {
 	return handler.isEnabled
+}
+
+func (handler *EndTagHandler) WasFired() bool {
+	return handler.wasFired
+}
+
+func (handler *EndTagHandler) Next() LineHandler {
+	return nil
 }
 
 // Matcher contains helper methods used to find tag in line.

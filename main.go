@@ -39,5 +39,7 @@ func main() {
 
 	fmt.Println("Number of read lines is: ", fileReader.TotalReadLines())
 
+	fmt.Println(parser.Stats())
+
 	fmt.Println("Program finished.")
 }

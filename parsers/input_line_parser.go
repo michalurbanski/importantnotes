@@ -10,6 +10,7 @@ import (
 type InputLineParser interface {
 	ParseLine(lineNumber int, text string) (*models.InputLine, error)
 	IsEnabled() bool
+	Stats() ParserStats
 }
 
 // SelectInputLinesParser determines which parser should be used based on configuration.

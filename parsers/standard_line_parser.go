@@ -17,3 +17,8 @@ func (s StandardLineParser) ParseLine(lineNumber int, text string) (*models.Inpu
 func (s StandardLineParser) IsEnabled() bool {
 	return true
 }
+
+// Stats for this parser always returns information that handlers were not fired as they're not defined.
+func (s StandardLineParser) Stats() ParserStats {
+	return ParserStats{IsEndTagHandlerFired: false, IsStartTagHandlerFired: false}
+}
