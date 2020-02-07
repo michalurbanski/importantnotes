@@ -9,6 +9,7 @@ import (
 	"importantnotes/printers"
 	"importantnotes/processors"
 	"importantnotes/readers/filereader"
+	"importantnotes/stats"
 	"log"
 )
 
@@ -38,8 +39,12 @@ func main() {
 	colorPrinter.Print(*priorityNotes)
 
 	fmt.Println("Number of read lines is: ", fileReader.TotalReadLines())
-
 	fmt.Println(parser.Stats())
+
+	// Actions stats
+	summary := stats.NewSummary(priorityNotes)
+	summary = summary.Calculate()
+	fmt.Printf("%+v", summary)
 
 	fmt.Println("Program finished.")
 }

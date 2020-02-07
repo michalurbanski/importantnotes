@@ -36,3 +36,15 @@ func (a *ActionList) String() string {
 
 	return strings.TrimRight(builder.String(), "\n")
 }
+
+// Filter filters notes using provided function.
+func (a ActionList) Filter(f func(Note) bool) []Note {
+	filtered := make([]Note, 0)
+	for _, note := range a.Notes {
+		if f(note) {
+			filtered = append(filtered, note)
+		}
+	}
+
+	return filtered
+}
