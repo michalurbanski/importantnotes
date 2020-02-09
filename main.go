@@ -14,7 +14,8 @@ import (
 )
 
 var configFileName = "config.yaml"
-var path = "./data/input.txt"
+var path = "./realdata/realdata.dat"
+var outputPath = "./realdata/output.txt"
 
 func main() {
 	fmt.Println("Starting program...")
@@ -35,8 +36,7 @@ func main() {
 
 	fmt.Println("Following priority tasks were found:")
 
-	colorPrinter := printers.ColorPrinter{}
-	colorPrinter.Print(*priorityNotes)
+	printers.ColorPrinter{}.Print(*priorityNotes)
 
 	fmt.Println("Number of read lines is: ", fileReader.TotalReadLines())
 	fmt.Println(parser.Stats())
@@ -45,6 +45,9 @@ func main() {
 	summary := stats.NewSummary(priorityNotes)
 	summary = summary.Calculate()
 	fmt.Printf("%+v", summary)
+
+	saver := stats.NewSaver(summary, outputPath)
+	saver.SaveToFile()
 
 	fmt.Println("Program finished.")
 }

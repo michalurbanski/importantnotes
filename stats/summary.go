@@ -8,6 +8,8 @@ import (
 	"time"
 )
 
+const timeLayout = "2006-01-02T15:04:05"
+
 // Summary holds stats from program execution.
 type Summary struct {
 	ImportantCount     int
@@ -44,8 +46,6 @@ func (summary *Summary) Calculate() *Summary {
 func (summary Summary) String() string {
 	var builder strings.Builder
 
-	const timeLayout = "2006-01-02T15:04:05"
-
 	builder.WriteString(fmt.Sprintf("\n%s\n", "Summary"))
 	builder.WriteString(fmt.Sprintf("Time: %s\n", summary.timeStamp.Format(timeLayout)))
 	builder.WriteString(fmt.Sprintf("Very important tasks: %d\n", summary.VeryImportantCount))
@@ -53,4 +53,13 @@ func (summary Summary) String() string {
 	builder.WriteString(fmt.Sprintf("Total tasks: %d\n", summary.TotalCount))
 
 	return builder.String()
+}
+
+// ToFileFormat formats results to format in which they will be saved to a file.
+func (summary Summary) ToFileFormat() string {
+	return fmt.Sprintf("%s;%d;%d;%d\n",
+		summary.timeStamp.Format(timeLayout),
+		summary.TotalCount,
+		summary.VeryImportantCount,
+		summary.ImportantCount)
 }
