@@ -1,6 +1,7 @@
 package main
 
 import (
+	"flag"
 	"fmt"
 	"importantnotes/configuration"
 	"importantnotes/finders"
@@ -13,20 +14,30 @@ import (
 	"log"
 )
 
+var inputFilePath string
 var configFileName = "config.yaml"
-var path = "./realdata/realdata.dat"
 var outputPath = "./realdata/output.txt"
+
+func init() {
+	flag.StringVar(&inputFilePath, "file", "", "Path to file with notes")
+	flag.Parse()
+}
 
 func main() {
 	fmt.Println("Starting program...")
 
 	config := configuration.GetConfig(configFileName)
-	parser := parsers.SelectInputLinesParser(config)
-
-	fileReader := filereader.NewFileReader(path, parser)
-	lines, err := fileReader.ReadLines()
+	inputFilePath, err := GetInputFileName(config)
 	if err != nil {
 		log.Fatal(err) // calls os.Exit(1) automatically
+	}
+
+	parser := parsers.SelectInputLinesParser(config)
+
+	fileReader := filereader.NewFileReader(inputFilePath, parser)
+	lines, err := fileReader.ReadLines()
+	if err != nil {
+		log.Fatal(err)
 	}
 
 	// Find very important and important notes
@@ -50,4 +61,19 @@ func main() {
 	saver.SaveToFile()
 
 	fmt.Println("Program finished.")
+}
+
+// GetInputFileName gets file name from config or command line argument
+func GetInputFileName(config configuration.Configuration) (string, error) {
+	// If value is provide as cmd line argument than it overwrites config value.
+	if len(inputFilePath) > 0 {
+		return inputFilePath, nil
+	}
+
+	configValue := config.FileReader.File_Name
+	if len(configValue) > 0 {
+		return configValue, nil
+	}
+
+	return "", fmt.Errorf("Input file path has to be provided in %s or using '-file' argument", configFileName)
 }
