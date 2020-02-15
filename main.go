@@ -16,7 +16,6 @@ import (
 
 var inputFilePath string
 var configFileName = "config.yaml"
-var outputPath = "./realdata/output.txt"
 
 func init() {
 	flag.StringVar(&inputFilePath, "file", "", "Path to file with notes")
@@ -57,7 +56,7 @@ func main() {
 	summary = summary.Calculate()
 	fmt.Println(summary)
 
-	saver := stats.NewSaver(summary, outputPath)
+	saver := stats.NewSaver(summary, config.FileReader.Output_Path)
 	saver.SaveToFile()
 
 	fmt.Println("Program finished.")

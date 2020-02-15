@@ -7,9 +7,10 @@ import (
 // Configuration provides configuration values based.
 type Configuration struct {
 	FileReader struct {
-		Start_Tag string
-		End_Tag   string
-		File_Name string
+		Start_Tag   string
+		End_Tag     string
+		File_Name   string
+		Output_Path string
 	}
 }
 

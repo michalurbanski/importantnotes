@@ -2,3 +2,4 @@ fileReader:
   start_tag: "#@<"
   end_tag: "#@>"
   file_name: ""
+  output_path: "./realdata/output.txt"
