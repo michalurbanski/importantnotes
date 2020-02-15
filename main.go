@@ -44,7 +44,7 @@ func main() {
 	// Actions stats
 	summary := stats.NewSummary(priorityNotes)
 	summary = summary.Calculate()
-	fmt.Printf("%+v", summary)
+	fmt.Println(summary)
 
 	saver := stats.NewSaver(summary, outputPath)
 	saver.SaveToFile()
