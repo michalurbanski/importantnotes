@@ -1,6 +1,8 @@
 package configuration
 
 import (
+	"fmt"
+
 	"github.com/tkanos/gonfig"
 )
 
@@ -22,6 +24,7 @@ func GetConfig(fileName string) Configuration {
 	configuration := Configuration{}
 	err := gonfig.GetConf(fileName, &configuration)
 	if err != nil {
+		fmt.Println("No config file found")
 		panic(err)
 	}
 

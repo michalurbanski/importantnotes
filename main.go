@@ -12,10 +12,14 @@ import (
 	"importantnotes/readers/filereader"
 	"importantnotes/stats"
 	"log"
+	"os"
+	"path"
+	"path/filepath"
+	"runtime"
+	"strings"
 )
 
 var inputFilePath string
-var configFileName = "config.yaml"
 
 func init() {
 	flag.StringVar(&inputFilePath, "file", "", "Path to file with notes")
@@ -25,8 +29,9 @@ func init() {
 func main() {
 	fmt.Println("Starting program...")
 
-	config := configuration.GetConfig(configFileName)
-	inputFilePath, err := GetInputFileName(config)
+	configFilePath := getConfigFilePath()
+	config := configuration.GetConfig(configFilePath)
+	inputFilePath, err := GetInputFileName(config, configFilePath)
 	if err != nil {
 		log.Fatal(err) // calls os.Exit(1) automatically
 	}
@@ -62,7 +67,7 @@ func main() {
 }
 
 // GetInputFileName gets file name from config or command line argument
-func GetInputFileName(config configuration.Configuration) (string, error) {
+func GetInputFileName(config configuration.Configuration, configFileName string) (string, error) {
 	// If value is provide as cmd line argument than it overwrites config value.
 	if len(inputFilePath) > 0 {
 		return inputFilePath, nil
@@ -74,4 +79,17 @@ func GetInputFileName(config configuration.Configuration) (string, error) {
 	}
 
 	return "", fmt.Errorf("Input file path has to be provided in %s or using '-file' argument", configFileName)
+}
+
+func getConfigFilePath() string {
+	env := os.Getenv("ENV")
+	if len(env) == 0 {
+		env = "development"
+	}
+
+	fileName := []string{"config.", env, ".yaml"}
+	_, currentFile, _, _ := runtime.Caller(0)
+	filePath := path.Join(filepath.Dir(currentFile), strings.Join(fileName, ""))
+
+	return filePath
 }
