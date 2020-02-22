@@ -30,8 +30,9 @@ func SortByPriorityAscending(actionList models.ActionList) {
 	// })
 	// return actionList
 
-	sort.Stable(ByMostImportantNote(actionList.Notes))
+	// how to sort using normal sort order (if even needed)
+	//sort.Stable(ByMostImportantNote(actionList.Notes))
 
-	// how to reverse sorting (if ever needed)
-	//sort.Stable(sort.Reverse(ByMostImportantNote(actionList.Notes)))
+	// sort descending
+	sort.Stable(sort.Reverse(ByMostImportantNote(actionList.Notes)))
 }
