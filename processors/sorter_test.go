@@ -21,7 +21,7 @@ func TestProcessors_SortByPriority_MostImportantFirst(t *testing.T) {
 	}
 
 	actionList := models.NewActionList(inputLines)
-	SortByPriority(*actionList)
+	SortByPriorityAscending(*actionList)
 
 	asserter.Equal(actionList.Notes[0].LineNumber, 2)
 }
@@ -46,7 +46,7 @@ func TestProcessors_SortByPriority_MostImportantFirstInReadOrder(t *testing.T) {
 	}
 
 	actionList := models.NewActionList(inputLines)
-	SortByPriority(*actionList)
+	SortByPriorityAscending(*actionList)
 
 	asserter.Equal(actionList.Notes[0].LineNumber, 2)
 	asserter.Equal(actionList.Notes[1].LineNumber, 3)

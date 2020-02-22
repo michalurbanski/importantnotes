@@ -42,10 +42,9 @@ func main() {
 	// Find very important and important notes
 	actionList := models.NewActionList(lines)
 	priorityNotes := finders.FindPriorityNotes(actionList)
-	processors.SortByPriority(*priorityNotes)
+	processors.SortByPriorityAscending(*priorityNotes)
 
 	fmt.Println("Following priority tasks were found:")
-
 	printers.ColorPrinter{}.Print(*priorityNotes)
 
 	fmt.Println("Number of read lines is: ", fileReader.TotalReadLines())

@@ -22,8 +22,8 @@ func (a ByMostImportantNote) Swap(i, j int) {
 	a[i], a[j] = a[j], a[i]
 }
 
-// SortByPriority orders action list from highest priority to smallest.
-func SortByPriority(actionList models.ActionList) {
+// SortByPriorityAscending orders action list from highest priority to smallest.
+func SortByPriorityAscending(actionList models.ActionList) {
 	// Sorting can also be done using this function
 	// sort.SliceStable(actionList.Notes, func(i, j int) bool {
 	// 	return actionList.Notes[i].Importance < actionList.Notes[j].Importance
@@ -33,5 +33,5 @@ func SortByPriority(actionList models.ActionList) {
 	sort.Stable(ByMostImportantNote(actionList.Notes))
 
 	// how to reverse sorting (if ever needed)
-	// sort.Sort(sort.Reverse(SortByMostImportant(actionList.Notes)))
+	//sort.Stable(sort.Reverse(ByMostImportantNote(actionList.Notes)))
 }
