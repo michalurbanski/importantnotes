@@ -6,17 +6,17 @@ import (
 	"testing"
 )
 
-func TestProcessors_SortByPriority_MostImportantFirst(t *testing.T) {
+func TestProcessors_SortByPriority_LeastImportantFirst(t *testing.T) {
 	asserter := test.Asserter{T: t}
 
 	inputLines := []models.InputLine{
 		models.InputLine{
 			Number: 1,
-			Text:   "! Important note",
+			Text:   "!!! Very important note",
 		},
 		models.InputLine{
 			Number: 2,
-			Text:   "!!! Very important note",
+			Text:   "! Important note",
 		},
 	}
 
@@ -27,27 +27,27 @@ func TestProcessors_SortByPriority_MostImportantFirst(t *testing.T) {
 }
 
 // Proves that Stable function was used
-func TestProcessors_SortByPriority_MostImportantFirstInReadOrder(t *testing.T) {
+func TestProcessors_SortByPriority_LeastImportantFirstInReadOrder(t *testing.T) {
 	asserter := test.Asserter{T: t}
 
 	inputLines := []models.InputLine{
 		models.InputLine{
 			Number: 1,
-			Text:   "! Important note",
-		},
-		models.InputLine{
-			Number: 2,
 			Text:   "!!! Very important note",
 		},
 		models.InputLine{
-			Number: 3,
+			Number: 2,
 			Text:   "!!! Another very important note in sequence",
+		},
+		models.InputLine{
+			Number: 3,
+			Text:   "! Important note",
 		},
 	}
 
 	actionList := models.NewActionList(inputLines)
 	SortByPriorityAscending(*actionList)
 
-	asserter.Equal(actionList.Notes[0].LineNumber, 2)
-	asserter.Equal(actionList.Notes[1].LineNumber, 3)
+	asserter.Equal(actionList.Notes[1].LineNumber, 1)
+	asserter.Equal(actionList.Notes[2].LineNumber, 2)
 }
