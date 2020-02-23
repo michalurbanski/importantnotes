@@ -30,7 +30,11 @@ func main() {
 	fmt.Println("Starting program...")
 
 	configFilePath := getConfigFilePath()
-	config := configuration.GetConfig(configFilePath)
+	config, err := configuration.GetConfig(configFilePath)
+	if err != nil {
+		log.Fatal(err)
+	}
+
 	inputFilePath, err := GetInputFileName(config, configFilePath)
 	if err != nil {
 		log.Fatal(err) // calls os.Exit(1) automatically
