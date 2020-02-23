@@ -1,6 +1,8 @@
 package stats
 
-import "os"
+import (
+	"os"
+)
 
 // Saver saves stats to file.
 type Saver struct {
@@ -14,13 +16,15 @@ func NewSaver(stats *Summary, fileName string) *Saver {
 }
 
 // SaveToFile saves stats to a specified file.
-func (s Saver) SaveToFile() {
+func (s Saver) SaveToFile() error {
 	f, err := os.OpenFile(s.fileName, os.O_APPEND|os.O_CREATE|os.O_WRONLY, 0644)
 	if err != nil {
-		panic(err) // TODO: log error
+		return err
 	}
 	defer f.Close()
 	if _, err := f.WriteString(s.stats.ToFileFormat()); err != nil {
-		panic(err)
+		return err
 	}
+
+	return nil // NOTE: interface can be be nil
 }
