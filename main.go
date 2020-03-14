@@ -14,8 +14,6 @@ import (
 	"log"
 	"os"
 	"path"
-	"path/filepath"
-	"runtime"
 	"strings"
 )
 
@@ -88,14 +86,22 @@ func GetInputFileName(config configuration.Configuration, configFileName string)
 }
 
 func getConfigFilePath() string {
+	// NOTE: simple implementation - expected default file is config.development.yaml
 	env := os.Getenv("ENV")
 	if len(env) == 0 {
 		env = "development"
 	}
 
 	fileName := []string{"config.", env, ".yaml"}
-	_, currentFile, _, _ := runtime.Caller(0)
-	filePath := path.Join(filepath.Dir(currentFile), strings.Join(fileName, ""))
+
+	// Search for config file in the current directory
+	currentDir, err := os.Getwd()
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	filePath := path.Join(currentDir, strings.Join(fileName, ""))
+	fmt.Println(filePath)
 
 	return filePath
 }
