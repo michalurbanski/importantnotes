@@ -1,6 +1,7 @@
 package main
 
 import (
+	"errors"
 	"flag"
 	"fmt"
 	"importantnotes/configuration"
@@ -32,7 +33,7 @@ func main() {
 		log.Fatal(err)
 	}
 
-	inputFilePath, err := GetInputFileName(config, configFilePath)
+	inputFilePath, err := getInputFileName(config, configFilePath)
 	if err != nil {
 		log.Fatal(err) // calls os.Exit(1) automatically
 	}
@@ -69,8 +70,8 @@ func main() {
 	fmt.Println("Program finished.")
 }
 
-// GetInputFileName gets file name from config or command line argument
-func GetInputFileName(config configuration.Configuration, configFileName string) (string, error) {
+// getInputFileName gets file name from config or command line argument
+func getInputFileName(config configuration.Configuration, configFileName string) (string, error) {
 	// If value is provide as cmd line argument than it overwrites config value.
 	if len(inputFilePath) > 0 {
 		return inputFilePath, nil
@@ -81,7 +82,10 @@ func GetInputFileName(config configuration.Configuration, configFileName string)
 		return configValue, nil
 	}
 
-	return "", fmt.Errorf("Input file path has to be provided in %s or using '-file' argument", configFileName)
+	message := fmt.Sprintf("Input file path has to be provided in %s or using 'file' argument.\n", configFileName)
+	message += "Consider also running the application using 'run.zsh' script."
+
+	return "", errors.New(message)
 }
 
 // getConfigFilePath reads configuration values from config.{env}.yaml file.
