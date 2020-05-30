@@ -14,7 +14,6 @@ import (
 	"log"
 	"os"
 	"path"
-	"strings"
 )
 
 var inputFilePath string
@@ -85,14 +84,16 @@ func GetInputFileName(config configuration.Configuration, configFileName string)
 	return "", fmt.Errorf("Input file path has to be provided in %s or using '-file' argument", configFileName)
 }
 
+// getConfigFilePath reads configuration values from config.{env}.yaml file.
+// {env} can be set using environment variable.
+// If not set, then by default 'development' value is used.
 func getConfigFilePath() string {
-	// NOTE: simple implementation - expected default file is config.development.yaml
 	env := os.Getenv("ENV")
 	if len(env) == 0 {
 		env = "development"
 	}
 
-	fileName := []string{"config.", env, ".yaml"}
+	configFileName := fmt.Sprintf("config.%s.yaml", env)
 
 	// Search for config file in the current directory
 	currentDir, err := os.Getwd()
@@ -100,8 +101,5 @@ func getConfigFilePath() string {
 		log.Fatal(err)
 	}
 
-	filePath := path.Join(currentDir, strings.Join(fileName, ""))
-	fmt.Println(filePath)
-
-	return filePath
+	return path.Join(currentDir, configFileName)
 }
