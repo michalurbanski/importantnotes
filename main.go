@@ -27,7 +27,11 @@ func init() {
 func main() {
 	fmt.Println("Starting program...")
 
-	configFilePath := getConfigFilePath()
+	configFilePath, err := getConfigFilePath()
+	if err != nil {
+		log.Fatal(err) // calls os.Exit(1) automatically
+	}
+
 	config, err := configuration.GetConfig(configFilePath)
 	if err != nil {
 		log.Fatal(err)
@@ -35,7 +39,7 @@ func main() {
 
 	inputFilePath, err := getInputFileName(config, configFilePath)
 	if err != nil {
-		log.Fatal(err) // calls os.Exit(1) automatically
+		log.Fatal(err)
 	}
 
 	parser := parsers.SelectInputLinesParser(config)
@@ -91,7 +95,7 @@ func getInputFileName(config configuration.Configuration, configFileName string)
 // getConfigFilePath reads configuration values from config.{env}.yaml file.
 // {env} can be set using environment variable.
 // If not set, then by default 'development' value is used.
-func getConfigFilePath() string {
+func getConfigFilePath() (string, error) {
 	env := os.Getenv("ENV")
 	if len(env) == 0 {
 		env = "development"
@@ -102,8 +106,8 @@ func getConfigFilePath() string {
 	// Search for config file in the current directory
 	currentDir, err := os.Getwd()
 	if err != nil {
-		log.Fatal(err)
+		return "", err
 	}
 
-	return path.Join(currentDir, configFileName)
+	return path.Join(currentDir, configFileName), nil
 }
