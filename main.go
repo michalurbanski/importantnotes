@@ -37,6 +37,7 @@ func main() {
 		log.Fatal(err)
 	}
 
+	// TODO: this method can be moved to configuration.Configuration
 	inputFilePath, err := getInputFileName(config, configFilePath)
 	if err != nil {
 		log.Fatal(err)
@@ -52,7 +53,7 @@ func main() {
 
 	// Find very important and important notes
 	actionList := models.NewActionList(lines)
-	priorityNotes := finders.FindPriorityNotes(actionList)
+	priorityNotes := finders.FindPriorityNotes(actionList) // TODO: this action can be in ActionList
 	processors.SortByPriorityAscending(*priorityNotes)
 
 	fmt.Println("Following priority tasks were found:")
