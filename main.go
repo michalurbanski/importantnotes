@@ -1,7 +1,6 @@
 package main
 
 import (
-	"errors"
 	"flag"
 	"fmt"
 	"importantnotes/configuration"
@@ -13,8 +12,6 @@ import (
 	"importantnotes/readers/filereader"
 	"importantnotes/stats"
 	"log"
-	"os"
-	"path"
 )
 
 var inputFilePath string
@@ -27,25 +24,34 @@ func init() {
 func main() {
 	fmt.Println("Starting program...")
 
-	configFilePath, err := getConfigFilePath()
+	configurationReader := configuration.MakeReader(inputFilePath)
+	config, err := configurationReader.GetConfig()
 	if err != nil {
 		log.Fatal(err) // calls os.Exit(1) automatically
 	}
 
-	config, err := configuration.GetConfig(configFilePath)
-	if err != nil {
-		log.Fatal(err)
-	}
+	// configFilePath, err := getConfigFilePath()
+	// if err != nil {
+	// 	log.Fatal(err) // calls os.Exit(1) automatically
+	// }
+
+	// config, err := configuration.GetConfig(configFilePath)
+	// if err != nil {
+	// 	log.Fatal(err)
+	// }
 
 	// TODO: this method can be moved to configuration.Configuration
-	inputFilePath, err := getInputFileName(config, configFilePath)
-	if err != nil {
-		log.Fatal(err)
-	}
+	// inputFilePath, err := getInputFileName(config, configFilePath)
+	// if err != nil {
+	// 	log.Fatal(err)
+	// }
+
+	// fmt.Printf("%#v", config.FileReader.FileName())
+	// os.Exit(1)
 
 	parser := parsers.SelectInputLinesParser(config)
 
-	fileReader := filereader.NewFileReader(inputFilePath, parser)
+	fileReader := filereader.NewFileReader(config.FileReader.FileName(), parser)
 	lines, err := fileReader.ReadLines()
 	if err != nil {
 		log.Fatal(err)
@@ -75,40 +81,41 @@ func main() {
 	fmt.Println("Program finished.")
 }
 
+// TODO: this method also has to be moved to configuration
 // getInputFileName gets file name from config or command line argument
-func getInputFileName(config configuration.Configuration, configFileName string) (string, error) {
-	// If value is provide as cmd line argument than it overwrites config value.
-	if len(inputFilePath) > 0 {
-		return inputFilePath, nil
-	}
+// func getInputFileName(config configuration.Configuration, configFileName string) (string, error) {
+// 	// If value is provide as cmd line argument than it overwrites config value.
+// 	if len(inputFilePath) > 0 {
+// 		return inputFilePath, nil
+// 	}
 
-	configValue := config.FileReader.File_Name
-	if len(configValue) > 0 {
-		return configValue, nil
-	}
+// 	configValue := config.FileReader.FileName()
+// 	if len(configValue) > 0 {
+// 		return configValue, nil
+// 	}
 
-	message := fmt.Sprintf("Input file path has to be provided in %s or using 'file' argument.\n", configFileName)
-	message += "Consider also running the application using 'run.zsh' script."
+// 	message := fmt.Sprintf("Input file path has to be provided in %s or using 'file' argument.\n", configFileName)
+// 	message += "Consider also running the application using 'run.zsh' script."
 
-	return "", errors.New(message)
-}
+// 	return "", errors.New(message)
+// }
 
 // getConfigFilePath reads configuration values from config.{env}.yaml file.
 // {env} can be set using environment variable.
 // If not set, then by default 'development' value is used.
-func getConfigFilePath() (string, error) {
-	env := os.Getenv("ENV")
-	if len(env) == 0 {
-		env = "development"
-	}
+// func getConfigFilePath() (string, error) {
+// 	env := os.Getenv("ENV")
+// 	if len(env) == 0 {
+// 		env = "development"
+// 	}
 
-	configFileName := fmt.Sprintf("config.%s.yaml", env)
+// 	configFileName := fmt.Sprintf("config.%s.yaml", env)
 
-	// Search for config file in the current directory
-	currentDir, err := os.Getwd()
-	if err != nil {
-		return "", err
-	}
+// 	// Search for config file in the current directory
+// 	currentDir, err := os.Getwd()
+// 	if err != nil {
+// 		return "", err
+// 	}
 
-	return path.Join(currentDir, configFileName), nil
-}
+// 	return path.Join(currentDir, configFileName), nil
+// }
