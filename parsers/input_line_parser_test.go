@@ -19,7 +19,7 @@ func TestParsers_InputLineParser_WhenNoTagsInConfigurationCreatesStandardLinePar
 
 func TestParser_InputLineParser_WhenTagsInConfigurationCreatesStartEndTagParser(t *testing.T) {
 	config := configuration.Configuration{}
-	config.FileReader = configuration.FileReader{"start", "end", "", ""}
+	config.FileReader = configuration.FileReader{Start_Tag: "start", End_Tag: "end", Output_Path: ""}
 	// Another, but more ugly type to assign nested struct (before FileReader was made own type)
 	// config.FileReader = struct {
 	// 	Start_Tag string
