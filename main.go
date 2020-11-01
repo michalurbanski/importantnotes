@@ -30,25 +30,6 @@ func main() {
 		log.Fatal(err) // calls os.Exit(1) automatically
 	}
 
-	// configFilePath, err := getConfigFilePath()
-	// if err != nil {
-	// 	log.Fatal(err) // calls os.Exit(1) automatically
-	// }
-
-	// config, err := configuration.GetConfig(configFilePath)
-	// if err != nil {
-	// 	log.Fatal(err)
-	// }
-
-	// TODO: this method can be moved to configuration.Configuration
-	// inputFilePath, err := getInputFileName(config, configFilePath)
-	// if err != nil {
-	// 	log.Fatal(err)
-	// }
-
-	// fmt.Printf("%#v", config.FileReader.FileName())
-	// os.Exit(1)
-
 	parser := parsers.SelectInputLinesParser(config)
 
 	fileReader := filereader.NewFileReader(config.FileReader.FileName(), parser)
@@ -80,42 +61,3 @@ func main() {
 
 	fmt.Println("Program finished.")
 }
-
-// TODO: this method also has to be moved to configuration
-// getInputFileName gets file name from config or command line argument
-// func getInputFileName(config configuration.Configuration, configFileName string) (string, error) {
-// 	// If value is provide as cmd line argument than it overwrites config value.
-// 	if len(inputFilePath) > 0 {
-// 		return inputFilePath, nil
-// 	}
-
-// 	configValue := config.FileReader.FileName()
-// 	if len(configValue) > 0 {
-// 		return configValue, nil
-// 	}
-
-// 	message := fmt.Sprintf("Input file path has to be provided in %s or using 'file' argument.\n", configFileName)
-// 	message += "Consider also running the application using 'run.zsh' script."
-
-// 	return "", errors.New(message)
-// }
-
-// getConfigFilePath reads configuration values from config.{env}.yaml file.
-// {env} can be set using environment variable.
-// If not set, then by default 'development' value is used.
-// func getConfigFilePath() (string, error) {
-// 	env := os.Getenv("ENV")
-// 	if len(env) == 0 {
-// 		env = "development"
-// 	}
-
-// 	configFileName := fmt.Sprintf("config.%s.yaml", env)
-
-// 	// Search for config file in the current directory
-// 	currentDir, err := os.Getwd()
-// 	if err != nil {
-// 		return "", err
-// 	}
-
-// 	return path.Join(currentDir, configFileName), nil
-// }
