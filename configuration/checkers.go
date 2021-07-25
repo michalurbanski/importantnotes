@@ -12,6 +12,6 @@ type StartEndChecker struct {
 // Check verifies if StartEndChecker can be used.
 // It can be used when at least one of the tags (start_tag, end_tag) is defined.
 func (checker StartEndChecker) Check(configuration Configuration) bool {
-	return len(configuration.FileReader.Start_Tag) > 0 ||
-		len(configuration.FileReader.End_Tag) > 0
+	return len(configuration.FileReader.StartTag) > 0 ||
+		len(configuration.FileReader.EndTag) > 0
 }

@@ -54,7 +54,7 @@ func main() {
 	summary = summary.Calculate()
 	fmt.Println(summary)
 
-	saver := stats.NewSaver(summary, config.FileReader.Output_Path)
+	saver := stats.NewSaver(summary, config.FileReader.OutputPath)
 	if err := saver.SaveToFile(); err != nil {
 		log.Printf("Error while saving results to output file. %v\n", err)
 	}

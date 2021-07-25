@@ -2,9 +2,10 @@ package configuration
 
 // Configuration provides configuration values based.
 type Configuration struct {
-	FileReader FileReader
+	// TODO: change variable name
+	FileReader Read
 }
 
 func makeConfiguration(inputFilePath string) Configuration {
-	return Configuration{FileReader: makeFileReader(inputFilePath)}
+	return Configuration{FileReader: makeRead(inputFilePath)}
 }

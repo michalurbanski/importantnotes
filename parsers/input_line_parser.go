@@ -17,8 +17,8 @@ type InputLineParser interface {
 func SelectInputLinesParser(config configuration.Configuration) InputLineParser {
 	inputLinesParsers := map[configuration.Checker]InputLineParser{
 		configuration.StartEndChecker{}: NewStartEndTagParser(
-			Tag{Name: config.FileReader.Start_Tag},
-			Tag{Name: config.FileReader.End_Tag},
+			Tag{Name: config.FileReader.StartTag},
+			Tag{Name: config.FileReader.EndTag},
 		),
 	}
 

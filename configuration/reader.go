@@ -69,6 +69,7 @@ func (reader Reader) readConfig(configFileName string) (Configuration, error) {
 	return configuration, nil
 }
 
+// TODO: this could be done in MakeReader function even?
 // checkInputFilePresence checks if path to input file is provide either in config
 // or as a command line argument.
 func (reader Reader) checkInputFilePresence(config Configuration, configFileName string) error {
