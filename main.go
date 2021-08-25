@@ -32,7 +32,7 @@ func main() {
 
 	parser := parsers.SelectInputLinesParser(config)
 
-	fileReader := filereader.NewFileReader(config.FileReader.FileName(), parser)
+	fileReader := filereader.NewFileReader(config.Read.FileName(), parser)
 	lines, err := fileReader.ReadLines()
 	if err != nil {
 		log.Fatal(err)
@@ -54,7 +54,7 @@ func main() {
 	summary = summary.Calculate()
 	fmt.Println(summary)
 
-	saver := stats.NewSaver(summary, config.FileReader.OutputPath)
+	saver := stats.NewSaver(summary, config.Read.OutputPath)
 	if err := saver.SaveToFile(); err != nil {
 		log.Printf("Error while saving results to output file. %v\n", err)
 	}

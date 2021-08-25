@@ -57,6 +57,7 @@ func getConfigFilePath() (string, error) {
 // readConfig reads configuration from yaml file.
 func (reader Reader) readConfig(configFileName string) (Configuration, error) {
 	configuration := makeConfiguration(reader.inputFilePath)
+	// TODO: can both sections - 'read', and a new 'write' one (to be added) can be handled?
 	err := gonfig.GetConf(configFileName, &configuration)
 	if err != nil {
 		return configuration, fmt.Errorf("No config file found. %v", err)
@@ -78,7 +79,7 @@ func (reader Reader) checkInputFilePresence(config Configuration, configFileName
 		return nil
 	}
 
-	configValue := config.FileReader.FileName()
+	configValue := config.Read.FileName()
 	if len(configValue) > 0 {
 		return nil
 	}
