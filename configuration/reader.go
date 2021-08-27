@@ -84,6 +84,7 @@ func (reader Reader) checkInputFilePresence(config Configuration, configFileName
 		return nil
 	}
 
+	// TODO: It's now checked in main.go, is it still needed here?
 	message := fmt.Sprintf("Input file path has to be provided in %s or using 'file' argument.\n", configFileName)
 	message += "Consider also running the application using 'run.zsh' script."
 

@@ -12,13 +12,21 @@ import (
 	"importantnotes/readers/filereader"
 	"importantnotes/stats"
 	"log"
+	"os"
 )
 
 var inputFilePath string
 
 func init() {
-	flag.StringVar(&inputFilePath, "file", "", "Path to file with notes")
+	flag.StringVar(&inputFilePath, "file", "", "Path to the file with notes to process.")
 	flag.Parse()
+
+	if len(inputFilePath) == 0 {
+		fmt.Println("ERROR: -file required parameter was not provided.")
+		fmt.Println("Usage:")
+		flag.PrintDefaults()
+		os.Exit(1)
+	}
 }
 
 func main() {
