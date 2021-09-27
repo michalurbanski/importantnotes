@@ -2,13 +2,16 @@
 # followed to create this file.
 
 # parameters
+# Special syntax $$ specific for Makefile, it's not bash
 GOBIN=$$GOPATH/bin
 
+# https://stackoverflow.com/a/29576870 - explains why @ at the beginning
 hello:
 	@echo "Please check makefile contents for details on how to install the program."
 	@echo $(GOBIN)
 
 # Simple approach - install application in /bin and copy config to the same place.
+# Read as 'install step depends on config.development.yaml file'
 install: config.development.yaml
 	go install
 	cp config.development.yaml $(GOBIN)
