@@ -2,6 +2,10 @@
 # followed to create this file.
 
 # parameters
+ifndef GOPATH
+$(error Please set GOPATH variable to use this installation method)
+endif
+
 # Special syntax $$ specific for Makefile, it's not bash
 GOBIN=$$GOPATH/bin
 
