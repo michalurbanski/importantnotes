@@ -3,6 +3,9 @@ App was created in order to extract very important and important notes from a se
 
 In addition, app saves aggregated stats regarding these notes in output file (stored in realdata folder).
 
+## How to clone the source code
+Clone the source code to your default sources location or $GOPATH, src/importantnotes folder.
+
 ## How to run the app
 **Option 1:**
 
@@ -55,4 +58,4 @@ Regular note
 !!! Very important note
 
 ## Additional notes
-App was tested on golang version 1.13.1 darwin/amd64
+App was tested on golang version 1.17.6 darwin/arm64
