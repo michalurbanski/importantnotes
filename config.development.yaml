@@ -1,5 +1,4 @@
 read:
   startTag: "#@<"
   endTag: "#@>"
-  fileName: ""
   outputPath: "./realdata/output.txt"

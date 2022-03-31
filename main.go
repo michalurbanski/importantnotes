@@ -40,7 +40,7 @@ func main() {
 
 	parser := parsers.SelectInputLinesParser(config)
 
-	fileReader := filereader.NewFileReader(config.Read.FileName(), parser)
+	fileReader := filereader.NewFileReader(config.InputFilePath, parser)
 	lines, err := fileReader.ReadLines()
 	if err != nil {
 		log.Fatal(err)
