@@ -1,6 +1,6 @@
 # Important notes app
 App was created in order to track notes, paying special attention to the very important and important ones. 
-Notes are stored in a text files.
+Notes are stored in a text file.
 
 Application parses lines from the file and categorizes them based on used tags:
 - Regular note
