@@ -1,7 +1,14 @@
 # Important notes app
-App was created in order to extract very important and important notes from a set of notes. For details [see](#Specs).
+App was created in order to track notes, paying special attention to the very important and important ones. 
+Notes are stored in a text files.
 
-In addition, app saves aggregated stats regarding these notes in output file (stored in realdata folder).
+Application parses lines from the file and categorizes them based on used tags:
+- Regular note
+- ! Important note
+- !!! Very important note
+
+In addition, the app saves aggregated stats for each run in the output file (stored in the 'realdata' folder).
+Idea here is to track (outside of this app) whether number of notes (especially very important ones) is decreasing over time, or not.
 
 ## How to clone the source code
 Clone the source code to your default sources location or $GOPATH, src/importantnotes folder.
@@ -13,7 +20,7 @@ Clone the source code to your default sources location or $GOPATH, src/important
 
 **Option 2:**
 
-Set environmental variable `IMPORTANTNOTES_FILE` and execute script:
+Set environmental variable `IMPORTANTNOTES_FILE` to point to the file with notes and execute the script:
 
 `./run.zsh`
  
@@ -48,14 +55,6 @@ Format is:
 time; #(very important + important tasks);#(very important tasks);#(important tasks)
 
 Entry in the output file is added each time this application is run.
-
-## Specs
-
-There are 3 kinds of notes that can be parsed based on line contents:
-
-Regular note  
-! Important note  
-!!! Very important note
 
 ## Additional notes
 App was tested on golang version 1.17.6 darwin/arm64
