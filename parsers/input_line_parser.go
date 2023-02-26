@@ -22,7 +22,7 @@ func SelectInputLinesParser(config configuration.Configuration) InputLineParser 
 		),
 	}
 
-	// NOTE: actually this is overengineering for only one checker.
+	// NOTE: actually this is overengineering for only one checker that is currently defined.
 	for checker, parser := range inputLinesParsers {
 		if checker.Check(config) {
 			return parser

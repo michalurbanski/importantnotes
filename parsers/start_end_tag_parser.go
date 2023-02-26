@@ -11,7 +11,7 @@ type StartEndTagParser struct {
 }
 
 // NewStartEndTagParser creates a new StartEndTagParser based on tags.
-// Can created only when one of the tags is present.
+// Can be created only when one of the tags is present.
 func NewStartEndTagParser(startTag Tag, endTag Tag) *StartEndTagParser {
 	parser := new(StartEndTagParser)
 
@@ -19,11 +19,11 @@ func NewStartEndTagParser(startTag Tag, endTag Tag) *StartEndTagParser {
 	var endTagHandler LineHandler
 	var firstTagHandler LineHandler
 
-	if endTag.IsEmpty() == false {
+	if !endTag.IsEmpty() {
 		endTagHandler = NewEndTagHandler(endTag)
 	}
 
-	if startTag.IsEmpty() == false {
+	if !startTag.IsEmpty() {
 		firstTagHandler = NewStartTagHandler(endTagHandler, startTag)
 	} else {
 		firstTagHandler = endTagHandler
@@ -36,7 +36,7 @@ func NewStartEndTagParser(startTag Tag, endTag Tag) *StartEndTagParser {
 // ParseLine processes lines between start and end tag.
 func (parser StartEndTagParser) ParseLine(lineNumber int, text string) (*models.InputLine, error) {
 	if parser.handler == nil {
-		return nil, errors.New("No handlers defined for this parser. Do you intend to use a different parser?")
+		return nil, errors.New("no handlers defined for this parser. Do you intend to use a different parser?")
 	}
 
 	return parser.handler.Handle(lineNumber, text)
