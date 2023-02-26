@@ -20,7 +20,7 @@ func (m *Asserter) Equal(a, b interface{}) {
 	m.T.Helper()
 
 	if a != b {
-		m.T.Errorf("Expected %#v (%T), was %#v (%T)", a, a, b, b)
+		m.T.Errorf("expected %#v (%T), was %#v (%T)", a, a, b, b)
 	}
 }
 

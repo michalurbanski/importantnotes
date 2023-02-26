@@ -61,7 +61,7 @@ func (reader Reader) readConfig(configFileName string) (Configuration, error) {
 	// TODO: can both sections - 'read', and a new 'write' one (to be added) can be handled?
 	err := gonfig.GetConf(configFileName, &configuration)
 	if err != nil {
-		return configuration, fmt.Errorf("No config file found. %v", err)
+		return configuration, fmt.Errorf("no config file found. %v", err)
 	}
 
 	if err := reader.checkInputFilePresence(configuration, configFileName); err != nil {

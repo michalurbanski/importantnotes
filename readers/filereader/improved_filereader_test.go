@@ -22,7 +22,7 @@ func TestFilereader_LinesReaderReadLines_AllLinesReadLinesEqualToInputLines(t *t
 	linesReader := NewLinesReader(parser, reader)
 	_, err := linesReader.ReadLines()
 	if err != nil {
-		t.Errorf("Unexpected error")
+		t.Errorf("unexpected error")
 	}
 
 	a.Equal(2, linesReader.TotalReadLines())
@@ -45,7 +45,7 @@ func TestFilereader_LinesReaderReadLines_SomeLinesReadOnlyBetweenTags(t *testing
 	linesReader := NewLinesReader(parser, reader)
 	_, err := linesReader.ReadLines()
 	if err != nil {
-		t.Errorf("Unexpected error")
+		t.Errorf("unexpected error")
 	}
 
 	// Should stop reading after finding end tag

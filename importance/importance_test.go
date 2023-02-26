@@ -19,11 +19,11 @@ func TestImportance_DetermineImportanceBasedOnLine(t *testing.T) {
 		t.Run(c.input, func(t *testing.T) {
 			result, err := DetermineNoteImportance(c.input)
 			if err != nil {
-				t.Errorf("Error parsing line %s, %s", c.input, err)
+				t.Errorf("error parsing line %s, %s", c.input, err)
 			}
 
 			if result != c.result {
-				t.Errorf("Error: %q is %q, but should be %q\n",
+				t.Errorf("error: %q is %q, but should be %q\n",
 					c.input, result, c.result)
 			}
 		})

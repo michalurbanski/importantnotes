@@ -13,7 +13,7 @@ func TestParsers_InputLineParser_WhenNoTagsInConfigurationCreatesStandardLinePar
 	case StandardLineParser:
 		break
 	default:
-		t.Errorf("Incorrect type passed %T", lp)
+		t.Errorf("incorrect type passed %T", lp)
 	}
 }
 
@@ -31,6 +31,6 @@ func TestParser_InputLineParser_WhenTagsInConfigurationCreatesStartEndTagParser(
 	case *StartEndTagParser:
 		break
 	default:
-		t.Errorf("Incorrect type passed %T", lp)
+		t.Errorf("incorrect type passed %T", lp)
 	}
 }
