@@ -18,7 +18,10 @@ import (
 var inputFilePath string
 
 func init() {
-	flag.StringVar(&inputFilePath, "file", "", "Path to the file with notes to process.")
+	missingFileParameter := "Path to the file with notes to process.\n"
+	missingFileParameter += "Optionally use run.zsh to run the app."
+
+	flag.StringVar(&inputFilePath, "file", "", missingFileParameter)
 	flag.Parse()
 
 	if len(inputFilePath) == 0 {
