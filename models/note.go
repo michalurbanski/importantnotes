@@ -18,7 +18,7 @@ type Note struct {
 func NewNote(inputLine *InputLine) *Note {
 	importance, err := importance.DetermineNoteImportance(inputLine.Text)
 	if err != nil {
-		panic("Incorrect regular expression: " + err.Error())
+		panic("incorrect regular expression: " + err.Error())
 	}
 
 	return &Note{

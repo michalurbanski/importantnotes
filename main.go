@@ -52,7 +52,7 @@ func main() {
 	// Find very important and important notes
 	actionList := models.NewActionList(lines)
 	priorityNotes := finders.FindPriorityNotes(actionList) // TODO: this action can be in ActionList
-	processors.SortByPriorityAscending(*priorityNotes)
+	processors.SortByPriorityAscending(*priorityNotes)     // TODO: this could be object chaining or sth similar https://medium.com/@yuseferi/method-chaining-in-golang-fa29a8c40c97
 
 	fmt.Println("Following priority tasks were found:")
 	printers.ColorPrinter{}.Print(*priorityNotes)
