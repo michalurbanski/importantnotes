@@ -51,20 +51,22 @@ func main() {
 
 	// Find very important and important notes
 	actionList := models.NewActionList(lines)
-	priorityNotes := finders.FindPriorityNotes(actionList) // TODO: this action can be in ActionList
-	processors.SortByPriorityAscending(*priorityNotes)     // TODO: this could be object chaining or sth similar https://medium.com/@yuseferi/method-chaining-in-golang-fa29a8c40c97
+	priorityNotes := finders.FindPriorityNotes(actionList)
+	processors.SortByPriorityAscending(*priorityNotes)
 
+	// Output to screen found priority notes
 	fmt.Println("Following priority tasks were found:")
-	printers.ColorPrinter{}.Print(*priorityNotes)
+	printers.MakeColorPrinter().Print(priorityNotes)
 
+	// Stats about the notes
 	fmt.Println("Number of read lines is: ", fileReader.TotalReadLines())
 	fmt.Println(parser.Stats())
 
-	// Actions stats
 	summary := stats.NewSummary(priorityNotes)
 	summary = summary.Calculate()
 	fmt.Println(summary)
 
+	// Save stats to a file
 	saver := stats.NewSaver(summary, config.Read.OutputPath)
 	if err := saver.SaveToFile(); err != nil {
 		log.Printf("Error while saving results to output file. %v\n", err)

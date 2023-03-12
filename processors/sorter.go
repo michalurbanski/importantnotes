@@ -7,18 +7,18 @@ import (
 
 // Note: Sorting custom type https://yourbasic.org/golang/how-to-sort-in-go/
 
-// ByMostImportantNote sorts from the most important notes to the least ones.
-type ByMostImportantNote []models.Note
+// byMostImportantNote sorts from the most important notes to the least ones.
+type byMostImportantNote []models.Note
 
-func (a ByMostImportantNote) Len() int {
+func (a byMostImportantNote) Len() int {
 	return len(a)
 }
 
-func (a ByMostImportantNote) Less(i, j int) bool {
+func (a byMostImportantNote) Less(i, j int) bool {
 	return a[i].Importance < a[j].Importance
 }
 
-func (a ByMostImportantNote) Swap(i, j int) {
+func (a byMostImportantNote) Swap(i, j int) {
 	a[i], a[j] = a[j], a[i]
 }
 
@@ -34,5 +34,5 @@ func SortByPriorityAscending(actionList models.ActionList) {
 	//sort.Stable(ByMostImportantNote(actionList.Notes))
 
 	// sort descending
-	sort.Stable(sort.Reverse(ByMostImportantNote(actionList.Notes)))
+	sort.Stable(sort.Reverse(byMostImportantNote(actionList.Notes)))
 }
